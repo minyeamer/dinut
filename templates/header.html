@@ -1,0 +1,33 @@
+<div class="header">
+
+    <div>
+        <a href="{% url 'home' %}">
+            <h1 class="logo">Dinut</h1>
+        </a>
+    </div>
+    <div class="navbar">
+        <a href="{% url 'home' %}" class="header_nav"> <!-- foodapp 페이지 제작 전 임시 링크 -->
+            <span>식단 분석</span>
+        </a>
+        <a href="{% url 'home' %}" class="header_nav"> <!-- foodapp 페이지 제작 전 임시 링크 -->
+            <span>식단 관리</span>
+        </a>
+        </a>
+        {% if not user.is_authenticated %}
+        <a href="{% url 'accountapp:login' %}?next={{ request.path }}" class="header_nav">
+            <span>Login</span>
+        </a>
+        <a href="{% url 'accountapp:create' %}?next={{ request.path }}" class="header_nav">
+            <span>SignUp</span>
+        </a>
+        {% else %}
+        <a href="{% url 'accountapp:detail' pk=user.pk %}" class="header_nav">
+            <span>MyPage</span>
+        </a>
+        <a href="{% url 'accountapp:logout' %}?next={{ request.path }}" class="header_nav">
+            <span>Logout</span>
+        </a>
+        {% endif %}
+    </div>
+
+</div>

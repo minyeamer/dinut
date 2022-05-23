@@ -21,5 +21,6 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('', temp_upload, name='home'), # temporary assigned
     path('account/', include('accountapp.urls')),
+    path('profile/', include('profileapp.urls')),
     path('food/', include('foodapp.urls')),
 ]

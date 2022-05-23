@@ -17,8 +17,8 @@ ACTIVITY = (
 
 
 class Profile(models.Model):
-    user = models.OneToOneField(User, on_delete=models.CASCADE, related_name='profile')
-    nickname = models.CharField(max_length=20, unique=True)
+    user = models.OneToOneField(User, verbose_name='사용자 이름', on_delete=models.CASCADE, related_name='profile')
+    nickname = models.CharField(verbose_name='별명', max_length=20, unique=True)
     height = models.PositiveIntegerField(verbose_name='키(cm)',validators=[MinValueValidator(1)])
     weight = models.PositiveIntegerField(verbose_name='몸무게(kg)',validators=[MinValueValidator(1)])
     age = models.PositiveIntegerField(verbose_name='나이')
@@ -50,4 +50,4 @@ class Profile(models.Model):
         self.caloric_burn = self.bmr * activity_level[self.activity]
 
     def __str__(self):
-        return 'pk {}: {} - {}'.format(self.pk, self.nickname, self.caloric_burn)
+        return f'사용자 {self.pk}: {self.nickname}, 기초대사량: {self.bmr}, 활동대사량: {self.caloric_burn}'

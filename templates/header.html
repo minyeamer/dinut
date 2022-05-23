@@ -14,7 +14,7 @@
         </a>
         </a>
         {% if not user.is_authenticated %}
-        <a href="{% url 'accountapp:login' %}?next={{ request.path }}" class="header_nav">
+        <a href="{% url 'accountapp:login' %}" class="header_nav">
             <span>Login</span>
         </a>
         <a href="{% url 'accountapp:create' %}?next={{ request.path }}" class="header_nav">
@@ -24,7 +24,7 @@
         <a href="{% url 'accountapp:detail' pk=user.pk %}" class="header_nav">
             <span>MyPage</span>
         </a>
-        <a href="{% url 'accountapp:logout' %}?next={{ request.path }}" class="header_nav">
+        <a href="{% url 'accountapp:logout' %}" class="header_nav">
             <span>Logout</span>
         </a>
         {% endif %}

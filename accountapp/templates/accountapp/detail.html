@@ -4,13 +4,7 @@
 
     <div>
         <div class="width_500px">
-            <h2>{{target_user.username}}</h2>
-            <p>기초대사량: {{target_user.height}}</p>
-            <p>활동대사량: {{target_user.caloric_burn}}</p>
-
-            <!--{% if target_user.profile %}
-            <img src="{{ target_user.profile.image.url }}" alt=""
-                style="height: 12rem; width: 12rem; border-radius: 20rem; margin-bottom: 2rem; object-fit: cover;">
+            {% if target_user.profile %}
             <h2 style="font-family: 'NanumSquareB'">
                 {{ target_user.profile.nickname }}
                     {% if target_user == user %}
@@ -21,9 +15,42 @@
                     </a>
                     {% endif %}
             </h2>
-            <h5 style="margin-bottom: 3rem;">
-                {{ target_user.profile.message }}
-            </h5>
+
+            <hr>
+            <div class="profile">
+                <table style="margin-left:auto;margin-right:auto;">
+                    <th style="padding:15px;">키(cm)</th>
+                    <th style="padding:15px;">몸무게(kg)</th>
+                    <th style="padding:15px;">나이</th>
+                    <th style="padding:15px;">성별</th>
+                    <tr>
+                        <td>{{ target_user.profile.height }}</td>
+                        <td>{{ target_user.profile.weight }}</td>
+                        <td>{{ target_user.profile.age }}</td>
+                        <td>{{ target_user.profile.gender }}</td>
+                    </tr>
+                </table>
+                <hr>
+
+                <table style="margin-left:auto;margin-right:auto;">
+                    <th style="padding:15px;"></th>
+                    <th style="padding:15px;"></th>
+                    <tr>
+                        <td style="padding-right:15px;"><b>활동 및 운동 수준</b></td>
+                        <td>{{ target_user.profile.activity }}</td>
+                    </tr>
+                    <tr>
+                        <td style="padding-right:15px;"><b>기초대사량</b></td>
+                        <td>{{ target_user.profile.bmr }} Kcal</td>
+                    </tr>
+                    <tr>
+                        <td style="padding-right:15px;"><b>활동대사량</b></td>
+                        <td>{{ target_user.profile.caloric_burn }} Kcal</td>
+                    </tr>
+                </table>
+            </div>
+
+            <hr>
             {% else %}
                 {% if target_user == user %}
                 <a href="{% url 'profileapp:create' %}">
@@ -33,7 +60,7 @@
                 </a>
                 {% else %}
                 <h2>
-                    닉네임 미설정
+                    잘못된 접근입니다.
                 </h2>
                 {% endif %}
             {% endif %}
@@ -49,7 +76,7 @@
                 href="{% url 'accountapp:delete' pk=user.pk %}">
                 cancel
             </a>
-            {% endif %}-->
+            {% endif %}
 
         </div>
     </div>

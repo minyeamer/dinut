@@ -15,10 +15,11 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path, include
-from accountapp.views import AccountCreateView
+from foodapp.views import temp_upload
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('', AccountCreateView.as_view(), name='home'), # temporary assigned
+    path('', temp_upload, name='home'), # temporary assigned
     path('account/', include('accountapp.urls')),
+    path('food/', include('foodapp.urls')),
 ]

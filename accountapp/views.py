@@ -21,12 +21,6 @@ class AccountDetailView(DetailView):
     context_object_name = 'target_user'
     template_name = 'accountapp/detail.html'
 
-    # paginate_by = 25
-
-    # def get_context_data(self, **kwargs):
-    #     object_list = Article.objects.filter(writer=self.get_object())
-    #     return super(AccountDetailView, self).get_context_data(object_list=object_list, **kwargs)
-
 
 @method_decorator(has_ownership, 'get')
 @method_decorator(has_ownership, 'post')

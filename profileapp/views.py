@@ -1,9 +1,6 @@
-from django.shortcuts import render
-
-# Create your views here.
-from django.urls import reverse_lazy, reverse
-from django.utils.decorators import method_decorator
 from django.views.generic import CreateView, UpdateView
+from django.urls import reverse
+from django.utils.decorators import method_decorator
 
 from profileapp.decorators import profile_ownership_required
 from profileapp.forms import ProfileCreationForm
@@ -17,9 +14,8 @@ class ProfileCreateView(CreateView):
     template_name = 'profileapp/create.html'
 
     def form_valid(self, form):
-        temp_profile = form.save(commit=False)
-        temp_profile.user = self.request.user
-        temp_profile.save()
+        profile_form = form.save(commit=False)
+        profile_form.fill_secret_values(self.request.user)
         return super().form_valid(form)
 
     def get_success_url(self):

@@ -4,13 +4,14 @@
 
     <div>
         <div class="width_500px">
-            <h2>{{target_user.username}}</h2>
+            <!-- <h2>{{target_user.username}}</h2>
             <p>기초대사량: {{target_user.height}}</p>
-            <p>활동대사량: {{target_user.caloric_burn}}</p>
+            <p>활동대사량: {{target_user.caloric_burn}}</p> -->
 
-            <!--{% if target_user.profile %}
+            {% if target_user.profile %}
+            <!--
             <img src="{{ target_user.profile.image.url }}" alt=""
-                style="height: 12rem; width: 12rem; border-radius: 20rem; margin-bottom: 2rem; object-fit: cover;">
+                style="height: 12rem; width: 12rem; border-radius: 20rem; margin-bottom: 2rem; object-fit: cover;">-->
             <h2 style="font-family: 'NanumSquareB'">
                 {{ target_user.profile.nickname }}
                     {% if target_user == user %}
@@ -21,9 +22,17 @@
                     </a>
                     {% endif %}
             </h2>
+
+            {% for info in target_user.profile %}
+                {% if info == target_user.profile.nickname %}
+                    <p>{{ info }}</p>
+                    <br>
+                {% endif %}
+            {% endfor %}
+            <!--
             <h5 style="margin-bottom: 3rem;">
                 {{ target_user.profile.message }}
-            </h5>
+            </h5>-->
             {% else %}
                 {% if target_user == user %}
                 <a href="{% url 'profileapp:create' %}">
@@ -49,7 +58,7 @@
                 href="{% url 'accountapp:delete' pk=user.pk %}">
                 cancel
             </a>
-            {% endif %}-->
+            {% endif %}
 
         </div>
     </div>

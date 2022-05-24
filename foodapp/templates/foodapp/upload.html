@@ -21,26 +21,26 @@
                     <p class="message">Drag files to upload</p>
                     </div>
                     <label class="file-label" for="chooseFile">Choose File</label>
-                    <input class="file" id="chooseFile"  name="foodImage" type="file" onchange="dropFile.handleFiles(this.files)" accept="image/png, image/jpeg, image/gif">
+                    <input class="file" id="chooseFile" name="food_image" type="file" onchange="dropFile.handleFiles(this.files)" accept="image/png, image/jpeg, image/gif">
                 </div>
             <!-- Image Uploading bar Js에서 렌더링-->
 
             <div id="files" class="files">
                 <button class="btn btn-success" type="submit">Upload</button>
             </div>
-   
+
         </div>
     </form>
 
         <!-- 식단 분석 결과 -->
-        {% if post %} 
+        {% if food %}
         <br>
         <div id="NutritionArea">   
             <h2 class="title">Result</h2>
             <hr>    
             <div class="row">
                 <div class="col sm-6">
-                    <img src="{{post.foodImage.url}}" width="400"> 
+                    <img src="{{ food.food_image.url }}" width="400">
                 </div>
                 <div class="col sm-6">
                     <p> 데이터 뿌릴 곳입니다. </p>
@@ -56,6 +56,6 @@
         {% endif %}
 </div>
 
- <!-- HTML 렌더링 후 불러와야하기 때문에 아래에 배치 -->
+<!-- HTML 렌더링 후 불러와야하기 때문에 아래에 배치 -->
 <script src="{% static 'js/upload.js' %}"></script>
 {% endblock %}

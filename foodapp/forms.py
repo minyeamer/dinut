@@ -1,9 +1,9 @@
-from django import forms 
-from .models import ImageUploadModel 
+from django import forms
+from foodapp.models import FoodImage
 
 
-class ImageUploadForm(forms.ModelForm): 
+class FoodImageUploadForm(forms.ModelForm):
 
     class Meta: 
-        model = ImageUploadModel 
-        fields = ('foodImage', ) # uploaded_at 
+        model = FoodImage 
+        fields = ['food_image',]

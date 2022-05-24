@@ -1,20 +1,16 @@
-from .forms import ImageUploadForm 
 from django.shortcuts import render
-from django.conf import settings 
+from django.conf import settings
+from foodapp.forms import FoodImageUploadForm
 
 
-def temp_upload(request): 
+def upload_food_image(request):
 
-    if request.method == 'POST' : 
-        form = ImageUploadForm(request.POST, request.FILES)
-        if form.is_valid(): 
-            post = form.save(commit=False)  
-            post.save() 
-            
-            imageURL = settings.MEDIA_URL + form.instance.foodImage.name 
-
-            return render(request, 'foodapp/upload.html', {'form':form, 'post':post}) 
-
-    else: 
-         form = ImageUploadForm() 
-         return render(request, 'foodapp/upload.html', {'form':form}) 
+    if request.method == 'POST':
+        form = FoodImageUploadForm(request.POST, request.FILES)
+        if form.is_valid():
+            food = form.save(commit=False)
+            food.save()
+            return render(request, 'foodapp/upload.html', {'form':form,'food':food})
+    else:
+        form = FoodImageUploadForm()
+        return render(request, 'foodapp/upload.html', {'form':form})

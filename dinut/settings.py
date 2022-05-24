@@ -14,6 +14,7 @@ from pathlib import Path
 from django.urls import reverse_lazy
 import os
 import environ
+import torch
 
 env = environ.Env(
     # set casting, default value
@@ -144,6 +145,11 @@ MEDIA_ROOT_URL = '.'
 
 LOGIN_REDIRECT_URL = reverse_lazy('home')
 LOGOUT_REDIRECT_URL = reverse_lazy('accountapp:login')
+
+DL_MODELS = {
+    'YOLOv5': torch.hub.load('ultralytics/yolov5', 'yolov5s'),
+    'InceptionV3': None,
+}
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/3.2/ref/settings/#default-auto-field

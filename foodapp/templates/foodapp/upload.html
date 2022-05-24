@@ -1,61 +1,23 @@
-{% extends 'base.html' %}
-{% load bootstrap4 %}
-{% load static %}
-{% block content %}
-
-<head>
-    <link rel="stylesheet" href="{% static 'css/upload.css' %}">
-</head>
-
-<div class="container">
-    <div id="root">
-        <form method="POST" enctype="multipart/form-data">
-            {% csrf_token %} 
-            <h2 class="title">Upload Here</h2>
-            <hr>
-            <div class="contents">
-            <!-- Drop Box 부분 -->
-                <div class="upload-box">
-                    <div id="drop-file" class="drag-file">
-                    <img src="https://img.icons8.com/pastel-glyph/2x/image-file.png" alt="파일 아이콘" class="image">
-                    <p class="message">Drag files to upload</p>
-                    </div>
-                    <label class="file-label" for="chooseFile">Choose File</label>
-                    <input class="file" id="chooseFile" name="food_image" type="file" onchange="dropFile.handleFiles(this.files)" accept="image/png, image/jpeg, image/gif">
+<div id="root">
+    <form method="POST" enctype="multipart/form-data">
+        {% csrf_token %} 
+        <h2 class="title">Upload Here</h2>
+        <hr>
+        <div class="contents">
+        <!-- Drop Box 부분 -->
+            <div class="upload-box">
+                <div id="drop-file" class="drag-file">
+                <img src="https://img.icons8.com/pastel-glyph/2x/image-file.png" alt="파일 아이콘" class="image">
+                <p class="message">Drag files to upload</p>
                 </div>
-            <!-- Image Uploading bar Js에서 렌더링-->
-
-            <div id="files" class="files">
-                <button class="btn btn-success" type="submit">Upload</button>
+                <label class="file-label" for="chooseFile">Choose File</label>
+                <input class="file" id="chooseFile" name="food_image" type="file" onchange="dropFile.handleFiles(this.files)" accept="image/png, image/jpeg, image/gif">
             </div>
+        <!-- Image Uploading bar Js에서 렌더링-->
 
+        <div id="files" class="files">
+            <button class="btn btn-success" type="submit">Upload</button>
         </div>
-    </form>
 
-        <!-- 식단 분석 결과 -->
-        {% if food %}
-        <br>
-        <div id="NutritionArea">   
-            <h2 class="title">Result</h2>
-            <hr>    
-            <div class="row">
-                <div class="col sm-6">
-                    <img src="{{ food.food_image.url }}" width="400">
-                </div>
-                <div class="col sm-6">
-                    <p> 데이터 뿌릴 곳입니다. </p>
-                </div>
-            </div>
-            <div class="row">
-                <br>
-                <div class="col-6 col-md-4">
-                    <button class="mt-2 btn btn-success" type="button" onclick="clearNutrition()">clear</button>
-                </div>
-            </div>
-        </div>
-        {% endif %}
-</div>
-
-<!-- HTML 렌더링 후 불러와야하기 때문에 아래에 배치 -->
-<script src="{% static 'js/upload.js' %}"></script>
-{% endblock %}
+    </div>
+</form>

@@ -26,6 +26,7 @@ urlpatterns = [
     path('account/', include('accountapp.urls')),
     path('profile/', include('profileapp.urls')),
     path('food/', include('foodapp.urls')),
+    path('diet/', include('dietapp.urls')),
 ]
 
 urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

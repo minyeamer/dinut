@@ -17,15 +17,15 @@ ACTIVITY = (
 
 
 class Profile(models.Model):
-    user = models.OneToOneField(User, verbose_name='사용자 이름', on_delete=models.CASCADE, related_name='profile')
-    nickname = models.CharField(verbose_name='별명', max_length=20, unique=True)
-    height = models.PositiveIntegerField(verbose_name='키(cm)',validators=[MinValueValidator(1)])
-    weight = models.PositiveIntegerField(verbose_name='몸무게(kg)',validators=[MinValueValidator(1)])
-    age = models.PositiveIntegerField(verbose_name='나이')
-    gender = models.CharField(verbose_name='성별', max_length=1, choices=GENDERS)
-    activity = models.CharField(verbose_name='활동 및 운동 수준', max_length=255, choices=ACTIVITY)
-    bmr = models.PositiveIntegerField(verbose_name='기초대사량')
-    caloric_burn = models.PositiveIntegerField(verbose_name='활동대사량')
+    user = models.OneToOneField(User, on_delete=models.CASCADE, related_name='profile')
+    nickname = models.CharField('별명', max_length=20, unique=True)
+    height = models.PositiveIntegerField('키(cm)',validators=[MinValueValidator(1)])
+    weight = models.PositiveIntegerField('몸무게(kg)',validators=[MinValueValidator(1)])
+    age = models.PositiveIntegerField('나이')
+    gender = models.CharField('성별', max_length=1, choices=GENDERS)
+    activity = models.CharField('활동 및 운동 수준', max_length=255, choices=ACTIVITY)
+    bmr = models.PositiveIntegerField('기초대사량')
+    caloric_burn = models.PositiveIntegerField('활동대사량')
 
     def fill_secret_values(self, user: User):
         self.user = user

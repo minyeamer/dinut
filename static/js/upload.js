@@ -2,21 +2,25 @@ function DropFile(dropAreaId, fileListId) {
     let dropArea = document.getElementById(dropAreaId);
     let fileList = document.getElementById(fileListId);
   
+    //브라우저에서 드랍 관련한 기본 이벤트가 존재, 초기화하고 진행
     function preventDefaults(e) {
       e.preventDefault();
       e.stopPropagation();
     }
   
+    //드랍존에 접근했을 때 
     function highlight(e) {
       preventDefaults(e);
       dropArea.classList.add("highlight");
     }
   
+    //드랍존에서 벗어남
     function unhighlight(e) {
       preventDefaults(e);
       dropArea.classList.remove("highlight");
     }
   
+    //드랍존에 파일이 들어옴
     function handleDrop(e) {
       unhighlight(e);
       let dt = e.dataTransfer;
@@ -28,8 +32,14 @@ function DropFile(dropAreaId, fileListId) {
       if (fileList) {
         fileList.scrollTo({ top: fileList.scrollHeight });
       }
+
+    //드래그된 파일로 대체해주기 
+      var $file = document.getElementById("chooseFile")
+      $file.files = files
+
     }
   
+    //html에 표시 해줄 파일 배열 추출 
     function handleFiles(files) {
       files = [...files];
       files.forEach(previewFile);
@@ -73,7 +83,7 @@ function DropFile(dropAreaId, fileListId) {
       handleFiles
     };
   }
-  
+
   const dropFile = new DropFile("drop-file", "files");
 
   function clearNutrition(){

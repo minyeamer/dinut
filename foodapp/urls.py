@@ -1,9 +1,8 @@
 from django.urls import path
-from foodapp.views import temp_upload
-from django.conf import settings 
+from foodapp.views import upload_food_image
 
 app_name = 'foodapp'
 
 urlpatterns = [
-    path('upload/', temp_upload, name='upload'),
+    path('upload/', upload_food_image, name='upload'),
 ]

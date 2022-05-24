@@ -3,7 +3,7 @@ from django.contrib.auth.models import User
 
 
 class FoodImage(models.Model):
-    uploader = models.OneToOneField(User, on_delete=models.SET_NULL, null=True, related_name='food')
+    uploader = models.ForeignKey(User, on_delete=models.SET_NULL, null=True, related_name='food')
     food_image = models.ImageField('이미지 주소', upload_to='images/%Y/%m/%d', null=False)
     upload_date =  models.DateTimeField('업로드 날짜', auto_now=True, null=False)
 

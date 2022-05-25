@@ -1,0 +1,47 @@
+{% extends 'base.html' %}
+{% load bootstrap4 %}
+{% load static %}
+{% block content %}
+
+<head>
+    <link rel="stylesheet" href="{% static 'css/upload.css' %}">
+</head>
+
+<!--
+<py-env>
+    - bokeh
+    - numpy
+    - pandas
+</py-env>
+-->
+
+<div class="container">
+    {% include 'foodapp/upload.html' %}
+    <br>
+    {% if food %}
+        {% include 'foodapp/result.html' %}
+    {% endif %}
+    <hr>
+    {% for r in result %}
+        <p>{{r}}</p>
+    {% endfor %}
+</div>
+<!--
+<hr>
+<py-script>
+    import numpy as np
+    import pandas as pd
+    from bokeh import figure, output_file, show
+
+    x = [1, 2, 3, 4, 5]
+    y = [6, 7, 2, 4, 5]
+
+    p = figure(title='test', x_axis_label='x', y_axis_label='y')
+    p.line(x, y, legend='temp', line_width=2)
+    show(p)
+</py-script>
+-->
+
+<!-- HTML 렌더링 후 불러와야하기 때문에 아래에 배치 -->
+<script src="{% static 'js/upload.js' %}"></script>
+{% endblock %}

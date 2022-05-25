@@ -15,7 +15,7 @@ class ProfileCreateView(CreateView):
 
     def form_valid(self, form):
         profile_form = form.save(commit=False)
-        profile_form.fill_secret_values(self.request.user)
+        profile_form.fill_values(self.request.user)
         return super().form_valid(form)
 
     def get_success_url(self):

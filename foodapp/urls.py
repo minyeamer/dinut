@@ -4,5 +4,5 @@ from foodapp.views import upload_food_image
 app_name = 'foodapp'
 
 urlpatterns = [
-    path('upload/', upload_food_image, name='upload'),
+    path('analysis/', upload_food_image, name='analysis'),
 ]

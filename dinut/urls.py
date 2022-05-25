@@ -15,17 +15,17 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path, include
-from foodapp.views import upload_food_image
 from django.conf import settings 
-from django.conf.urls.static import static 
+from django.conf.urls.static import static
+from dietapp.views import diet_upload_view
 
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('', upload_food_image, name='home'), # temporary assigned
+    path('', diet_upload_view, name='home'), # temporary assigned
     path('account/', include('accountapp.urls')),
     path('profile/', include('profileapp.urls')),
-    path('food/', include('foodapp.urls')),
+    path('diet/', include('dietapp.urls')),
 ]
 
 urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

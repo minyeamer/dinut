@@ -2,6 +2,7 @@ from django.shortcuts import render
 from django.conf import settings
 from django.http import HttpRequest, HttpResponse
 from dietapp.forms import DietImageUploadForm
+from dietapp.query import get_similar_diet
 
 
 def diet_upload_view(request: HttpRequest) -> HttpResponse:
@@ -9,7 +10,7 @@ def diet_upload_view(request: HttpRequest) -> HttpResponse:
         form = DietImageUploadForm(request.POST, request.FILES)
         if form.is_valid():
             diet = form.save(commit=True)
-            if request.user:
+            if not request.user.is_anonymous:
                 diet.uploader = request.user
             diet.fill_values()
             return render(request, 'dietapp/diet.html', {'form':form,'diet':diet})

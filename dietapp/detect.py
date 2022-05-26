@@ -26,7 +26,7 @@ def detect_food(image_url: str, bbox: Optional[bool] = True) -> List[str]:
     else:
         food_list.append(predict_food(diet_image))
 
-    return food_list
+    return sorted(food_list)
 
 
 def detect_bowls(diet_image: np.ndarray) -> pd.DataFrame:

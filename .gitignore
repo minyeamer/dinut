@@ -133,3 +133,4 @@ dmypy.json
 media/images
 
 yolov5s.pt
+inceptionv3.h5

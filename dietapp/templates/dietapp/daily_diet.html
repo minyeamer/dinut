@@ -4,21 +4,102 @@
 {% block content %}
 
 <head>
-    <link rel="stylesheet" href="{% static 'css/diet.css' %}">
+    <link rel="stylesheet" href="{% static 'css/calendar.css' %}">
+    <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css" rel="stylesheet" >
 </head>
-
-<div class="container">
-    {% include 'dietapp/upload.html' %}
-    <br>
-    {% if food %}
-        {% include 'dietapp/result.html' %}
-    {% endif %}
-    <hr>
-    {% for r in result %}
-        <p>{{r}}</p>
-    {% endfor %}
+<div class="calories">
+    <p class="activityCalories">활동 대사량</p>
+    <p class="totalCalories">2,610</p>
+    <P class="basalCalories">기초 대사량: 1,930 kcal</P>
 </div>
+<div class="calendar">
+    <div class="calendar_header">
+        <div class="calendar_nav">
+            <button class="nav-btn go-prev">&lt;</button>
+            <span class="year"></span>년
+            <span class="month"></span>월
+            <!-- <button class="nav-btn go-today">오늘로 가기</button> -->
+            <button class="nav-btn go-next">&gt;</button>
+        </div>
+    </div>
+    <div class="calendar_main">
+        <div class="days">
+            <div class="day">일</div>
+            <div class="day">월</div>
+            <div class="day">화</div>
+            <div class="day">수</div>
+            <div class="day">목</div>
+            <div class="day">금</div>
+            <div class="day">토</div>
+        </div>
+        <div class="dates"></div>
+    </div>
 
-<!-- HTML 렌더링 후 불러와야하기 때문에 아래에 배치 -->
-<script src="{% static 'js/upload.js' %}"></script>
+    <!-- 모달 -->
+    <div class="diet-wrapper">
+        <div class="diet-bg">
+            <button class="diet-close"><i class="fa fa-times fa-2x" aria-hidden="true"></i></button>
+            <div class="diet_info">
+                <!--TODO 날짜 함수로 바꾸기-->
+                <div class="diet_ym">
+                    <span class="diet-year">2021</span>년
+                    <span class="diet-month">05</span>월
+                    <span class="diet-day">26</span>일
+                </div>
+                <h3>
+                    식사
+                </h3>
+                <!--TODO JS단에서 for문 써서 랜더링하기-->
+                <div class="diet-event">
+                    <div class="upload-box">
+                        <div id="drop-file" class="drag-file">
+                            <img src="https://img.icons8.com/pastel-glyph/2x/image-file.png" alt="파일 아이콘" class="image">
+                            <p class="message">Breakfast Image</p>
+                        </div>
+                        <label class="file-label" for="chooseFile">Choose</label>
+                        <input class="file" id="breakfast_image" name="breakfast_image" type="file" onchange="dropFile.handleFiles(this.files)" accept="image/png, image/jpeg, image/gif">
+                        <label class="delete-label" for="chooseFile">delete</label>
+                        <button class="invisible" type="button"></button>
+                    </div>
+                    <div class="upload-box">
+                        <div id="drop-file" class="drag-file">
+                            <img src="https://img.icons8.com/pastel-glyph/2x/image-file.png" alt="파일 아이콘" class="image">
+                            <p class="message">Lunch Image</p>
+                        </div>
+                        <label class="file-label" for="chooseFile">Choose</label>
+                        <input class="file" id="lunch_image" name="lunch_image" type="file" onchange="dropFile.handleFiles(this.files)" accept="image/png, image/jpeg, image/gif">
+                        <label class="delete-label" for="chooseFile">delete</label>
+                        <button class="invisible" type="button"></button>
+                    </div>
+                    <div class="upload-box">
+                        <div id="drop-file" class="drag-file">
+                            <img src="https://img.icons8.com/pastel-glyph/2x/image-file.png" alt="파일 아이콘" class="image">
+                            <p class="message">Dinner Image</p>
+                        </div>
+                        <label class="file-label" for="chooseFile">Choose</label>
+                        <input class="file" id="dinner_image" name="dinner_image" type="file" onchange="dropFile.handleFiles(this.files)" accept="image/png, image/jpeg, image/gif">
+                        <label class="delete-label" for="chooseFile">delete</label>
+                        <button class="invisible" type="button"></button>
+                    </div>
+                    <div class="upload-box">
+                        <div id="drop-file" class="drag-file">
+                            <img src="https://img.icons8.com/pastel-glyph/2x/image-file.png" alt="파일 아이콘" class="image">
+                            <p class="message">Dissert Image</p>
+                        </div>
+                        <label class="file-label" for="chooseFile">Choose</label>
+                        <input class="file" id="dissert_image" name="dissert_image" type="file" onchange="dropFile.handleFiles(this.files)" accept="image/png, image/jpeg, image/gif">
+                        <label class="delete-label" for="chooseFile">delete</label>
+                        <button class="invisible" type="button"></button>
+                    </div>
+                </div>
+            </div>
+            <div class="diet_set">
+                <button class="diet_btn">submit</button>
+            </div>
+        </div>
+    </div>
+    
+</div>
+<script src="{% static 'js/calendar.js' %}"></script>
+<script src="{% static 'js/diet.js' %}"></script>
 {% endblock %}

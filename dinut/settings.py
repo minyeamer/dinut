@@ -15,6 +15,7 @@ from django.urls import reverse_lazy
 import os
 import environ
 import torch
+from tensorflow.keras import models
 
 env = environ.Env(
     # set casting, default value
@@ -149,7 +150,7 @@ LOGOUT_REDIRECT_URL = reverse_lazy('accountapp:login')
 
 DL_MODELS = {
     'YOLOv5': torch.hub.load('ultralytics/yolov5', 'yolov5s'),
-    'InceptionV3': None,
+    'InceptionV3': models.load_model('inceptionv3.h5'),
 }
 
 # Default primary key field type

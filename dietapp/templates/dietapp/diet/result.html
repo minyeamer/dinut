@@ -1,0 +1,56 @@
+<div id="root">
+    <div id="NutritionArea">
+        <h2 class="title">Result</h2>
+        <div class="row">
+            <div class="col sm-6">
+                <img src="{{ diet.upload_diet.url }}" width="400">
+            </div>
+            <div class="col sm-6">
+                <p> 데이터 뿌릴 곳입니다. </p>
+            </div>
+        </div>
+        <div class="row">
+            <br>
+            <div class="col-6 col-md-4">
+                <a href="{% url 'dietapp:upload' %}">
+                    <button class="mt-2 btn btn-success" type="button">Clear</button>
+                </a>
+                <!--<button class="mt-2 btn btn-success" type="button" onclick="clearNutrition()">clear</button>-->
+            </div>
+        </div>
+        <hr>
+        <h2 class="title">Graph</h2>
+        <div class="row">
+            <div class="col sm-6">
+                <div style="font-family: 'Helvetica Neue', Arial; font-size: 16px">
+                    <h3>{{ chartTitle|safe }}</h3>
+                    <div id="chart-col">{{ chart.2|safe }}</div>
+                    <br/>
+                </div>
+            </div>
+            <div class="col sm-6">
+                <div style="font-family: 'Helvetica Neue', Arial; font-size: 16px">
+                    <h3>{{ chartTitle|safe }}</h3>
+                    <div id="chart-pie">{{ chart.1|safe }}</div>
+                    <br/>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <br>
+            <div class="col-6 col-md-4">
+                <div style="font-family: 'Helvetica Neue', Arial; font-size: 16px">
+                    <h3>{{ chartTitle|safe }}</h3>
+                    <div id="chart-bar">{{ chart.0|safe }}</div>
+                    <br/>
+                </div>
+            </div>
+        </div>
+        <hr>
+        <h2 class="title">Similar</h2>
+        <div class="row">
+            <!-- class="dataframe" -->
+            {{ smiliar|safe }}
+        </div>
+    </div>
+</div>

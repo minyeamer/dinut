@@ -133,8 +133,6 @@
   display: flex;
   width: 100%;
 }
-.contents .files .file .status .percent {
-}
 .contents .files .file .status .speed {
   margin-left: auto;
 }

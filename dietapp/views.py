@@ -11,8 +11,7 @@ def diet_upload_view(request: HttpRequest) -> HttpResponse:
             diet = form.save(commit=True)
             if request.user:
                 diet.uploader = request.user
-            diet.analyze_diet(settings.MEDIA_ROOT_URL + diet.upload_diet.url)
-            diet.save()
+            diet.fill_values()
             return render(request, 'dietapp/diet.html', {'form':form,'diet':diet})
     else:
         form = DietImageUploadForm()

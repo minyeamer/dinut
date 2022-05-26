@@ -1,7 +1,7 @@
+from typing import Dict
 from django.db import models
 from django.contrib.auth.models import User
 from django.core.validators import MinValueValidator
-from dietapp.detect import detect_food
 
 
 class AbstractNutrition(models.Model):
@@ -19,19 +19,6 @@ class AbstractNutrition(models.Model):
 
     class Meta:
         abstract = True
-
-    def reset_nutritions(self):
-        self.energy = 0.0
-        self.carb = 0.0
-        self.protein = 0.0
-        self.fat = 0.0
-        self.sugar = 0.0
-        self.fiber = 0.0
-        self.sodium = 0.0
-        self.vitamin_a = 0.0
-        self.riboflavin = 0.0
-        self.calcium = 0.0
-        self.iron = 0.0
 
 
 class Nutrition(AbstractNutrition):
@@ -55,23 +42,18 @@ class Diet(AbstractNutrition):
         db_table = 'diet'
         verbose_name_plural = '식단'
 
-    def analyze_diet(self, image_url: str):
-        detect_result = detect_food(image_url)
-        self.food_list = ', '.join(detect_result)
-
-        for food in detect_result:
-            nutrition = Nutrition.objects.get(food_name=food)
-            self.energy += nutrition.energy
-            self.carb += nutrition.carb
-            self.protein += nutrition.protein
-            self.fat += nutrition.fat
-            self.sugar += nutrition.sugar
-            self.fiber += nutrition.fiber
-            self.sodium += nutrition.sodium
-            self.vitamin_a = nutrition.vitamin_a
-            self.riboflavin = nutrition.riboflavin
-            self.calcium = nutrition.calcium
-            self.iron = nutrition.iron
+    def fill_nutritions(self, nutrition_info: Dict[str, float]):
+        self.energy = nutrition_info['energy']
+        self.carb = nutrition_info['carb']
+        self.protein = nutrition_info['protein']
+        self.fat = nutrition_info['fat']
+        self.sugar = nutrition_info['sugar']
+        self.fiber = nutrition_info['fiber']
+        self.sodium = nutrition_info['sodium']
+        self.vitamin_a = nutrition_info['vitamin_a']
+        self.riboflavin = nutrition_info['riboflavin']
+        self.calcium = nutrition_info['calcium']
+        self.iron = nutrition_info['iron']
 
     def __str__(self):
         return f'{self.food_list} - {self.energy} kcal'
@@ -86,16 +68,23 @@ class AbstractUpload(models.Model):
 
 
 class DietImage(Diet, AbstractUpload):
-    uploader = models.ForeignKey(User, on_delete=models.SET_NULL, null=True, related_name='diet')
+    uploader = models.ForeignKey(User, on_delete=models.SET_NULL, null=True, related_name='diet_image')
     upload_diet = models.ImageField('업로드 식단', upload_to='images/diet/%Y/%m/%d', null=False)
 
     class Meta:
         db_table = 'diet_image'
         verbose_name_plural = '식단 이미지'
 
+    def fill_values(self):
+        from dietapp.nutrition import analyze_diet
+        detect_result = analyze_diet(self.upload_diet.url)
+        self.food_list = detect_result['food_list']
+        self.fill_nutritions(detect_result)
+        self.save()
+
 
 class DailyDietImage(Diet, AbstractUpload):
-    uploader = models.ForeignKey(User, on_delete=models.CASCADE, related_name='daily')
+    uploader = models.ForeignKey(User, on_delete=models.CASCADE, related_name='daily_diet_image')
     morning_diet = models.ImageField('아침 식단', upload_to='images/daily/morning/%Y/%m/%d', null=True)
     lunch_diet = models.ImageField('점심 식단', upload_to='images/daily/lunch/%Y/%m/%d', null=True)
     dinner_diet = models.ImageField('저녁 식단', upload_to='images/daily/dinner/%Y/%m/%d', null=True)
@@ -105,14 +94,14 @@ class DailyDietImage(Diet, AbstractUpload):
         db_table = 'daily_diet_image'
         verbose_name_plural = '하루 식단 이미지'
 
-    def calc_nutritions(self):
-        self.reset_nutritions()
+    def fill_values(self):
+        upload_diet_list = [upload_diet.url for upload_diet in
+            [self.morning_diet, self.lunch_diet, self.dinner_diet, self.snack_diet] if upload_diet]
 
-        diet_list = [diet for diet in
-            [self.morning_diet, self.lunch_diet, self.dinner_diet, self.snack_diet] if diet]
-
-        for diet in diet_list:
-            self.analyze_diet(diet.url)
+        from dietapp.nutrition import sum_nutritions
+        calc_result = sum_nutritions(upload_diet_list)
+        self.fill_nutritions(calc_result)
+        self.save()
 
     def __str__(self):
-        return f'{self.user} - {self.energy} kcal'
+        return f'{self.uploader} - {self.energy} kcal'

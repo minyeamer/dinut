@@ -76,7 +76,10 @@ class DietImage(AbstractNutrition, AbstractUpload):
         db_table = 'diet_image'
         verbose_name_plural = '식단 이미지'
 
-    def fill_values(self):
+    def fill_values(self, uploader: User):
+        if uploader.is_authenticated:
+            self.uploader = uploader
+
         from dietapp.query import analyze_diet
         detect_result = analyze_diet(self.upload_diet.url)
         self.food_list = detect_result['food_list']
@@ -99,11 +102,11 @@ class DailyDietImage(AbstractNutrition, AbstractUpload):
         verbose_name_plural = '하루 식단 이미지'
 
     def fill_values(self, uploader: User):
+        self.uploader = uploader
         upload_diet_list = [upload_diet.url for upload_diet in
             [self.morning_diet, self.lunch_diet, self.dinner_diet, self.snack_diet] if upload_diet]
 
         from dietapp.query import sum_nutritions
-        self.uploader = uploader
         calc_result = sum_nutritions(upload_diet_list)
         self.fill_nutritions(calc_result)
         self.save()

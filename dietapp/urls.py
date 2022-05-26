@@ -1,9 +1,9 @@
 from django.urls import path
-from dietapp.views import diet_upload_view, daily_diet_view
+from dietapp.views import DietUploadView, DailyDietView
 
 app_name = 'dietapp'
 
 urlpatterns = [
-    path('upload/', diet_upload_view, name='upload'),
-    path('daily/', daily_diet_view, name='daily'),
+    path('upload/', DietUploadView.as_view(), name='upload'),
+    path('daily/', DailyDietView.as_view(), name='daily'),
 ]

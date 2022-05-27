@@ -8,7 +8,9 @@ RUN git clone https://github.com/minyeamer/dinut.git
 
 WORKDIR /home/dinut/
 
-RUN pip install -r requirements.txt
+RUN pip install --upgrade pip
+
+RUN pip install -r requirements.txt --no-cache-dir
 
 RUN pip install gunicorn
 

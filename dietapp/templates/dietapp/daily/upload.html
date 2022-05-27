@@ -1,0 +1,51 @@
+<!--TODO JS단에서 for문 써서 랜더링하기-->
+<form method="POST" enctype="multipart/form-data">
+    {% csrf_token %}
+    <div class="diet-event">
+        <div class="upload-box">
+            <div id="drop-file-morning" class="drag-file">
+                <img src="https://img.icons8.com/pastel-glyph/2x/image-file.png" alt="파일 아이콘" class="image">
+                <p class="message">Breakfast Image</p>
+            </div>
+            <label class="file-label" for="chooseFile">Choose</label>
+            <input class="file" id="chooseFile" name="morning_diet" type="file" onchange="dropFile.handleFiles(this.files)" accept="image/png, image/jpeg, image/gif">
+            <label class="delete-label" for="chooseFile">delete</label>
+            <button class="invisible" type="button"></button>
+            <!--<div class="preview" id="preview"></div>-->
+        </div>
+        <div class="upload-box">
+            <div id="drop-file-lunch" class="drag-file">
+                <img src="https://img.icons8.com/pastel-glyph/2x/image-file.png" alt="파일 아이콘" class="image">
+                <p class="message">Lunch Image</p>
+            </div>
+            <label class="file-label" for="chooseFile">Choose</label>
+            <input class="file" id="chooseFile" name="lunch_diet" type="file" onchange="dropFile.handleFiles(this.files)" accept="image/png, image/jpeg, image/gif">
+            <label class="delete-label" for="chooseFile">delete</label>
+            <button class="invisible" type="button"></button>
+        </div>
+        <div class="upload-box">
+            <div id="drop-file-dinner" class="drag-file">
+                <img src="https://img.icons8.com/pastel-glyph/2x/image-file.png" alt="파일 아이콘" class="image">
+                <p class="message">Dinner Image</p>
+            </div>
+            <label class="file-label" for="chooseFile">Choose</label>
+            <input class="file" id="chooseFile" name="dinner_diet" type="file" onchange="dropFile.handleFiles(this.files)" accept="image/png, image/jpeg, image/gif">
+            <label class="delete-label" for="chooseFile">delete</label>
+            <button class="invisible" type="button"></button>
+        </div>
+        <div class="upload-box">
+            <div id="drop-file-snack" class="drag-file">
+                <img src="https://img.icons8.com/pastel-glyph/2x/image-file.png" alt="파일 아이콘" class="image" required="true">
+                <p class="message">Dissert Image</p>
+            </div>
+            <label class="file-label" for="chooseFile">Choose</label>
+            <input class="file" id="chooseFile" name="snack_diet" type="file" onchange="dropFile.handleFiles(this.files)" accept="image/png, image/jpeg, image/gif">
+            <label class="delete-label" for="chooseFile">delete</label>
+            <button class="invisible" type="button"></button>
+        </div>
+    </div>
+
+    <div class="diet_set">
+        <button class="diet_btn" type="submit">Submit</button>
+    </div>
+</form>

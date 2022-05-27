@@ -1,0 +1,27 @@
+{% extends 'base.html' %}
+{% load bootstrap4 %}
+{% load static %}
+{% block content %}
+
+<head>
+    <link rel="stylesheet" href="{% static 'css/diet.css' %}">
+
+    <script type="text/javascript" src="{% static "fusioncharts/fusioncharts.js" %}"></script>
+    <script type="text/javascript" src="{% static "fusioncharts/fusioncharts.charts.js" %}"></script>
+    <script type="text/javascript" src="{% static "fusioncharts/themes/fusioncharts.theme.fusion.js" %}"></script>
+
+    <script type="text/javascript" src="https://cdn.fusioncharts.com/fusioncharts/latest/fusioncharts.js"></script>
+    <script type="text/javascript" src="https://cdn.fusioncharts.com/fusioncharts/latest/themes/fusioncharts.theme.fusion.js"></script>
+</head>
+
+<div class="container">
+    {% if diet %}
+        {% include 'dietapp/diet/result.html' %}
+    {% else %}
+        {% include 'dietapp/diet/upload.html' %}
+    {% endif %}
+</div>
+
+<!-- HTML 렌더링 후 불러와야하기 때문에 아래에 배치 -->
+<script src="{% static 'js/upload.js' %}"></script>
+{% endblock %}

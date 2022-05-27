@@ -1,0 +1,84 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+    <div>
+        <div class="width_500px">
+            {% if target_user.profile %}
+            <h2 style="font-family: 'NanumSquareB'">
+                {{ target_user.profile.nickname }}
+                    {% if target_user == user %}
+                    <a class="material-icons"
+                        style="box-shadow: 0 0 4px #ccc; border-radius: 10rem; padding: .4rem;"
+                        href="{% url 'profileapp:update' pk=target_user.profile.pk %}">
+                        edit
+                    </a>
+                    {% endif %}
+            </h2>
+
+            <hr>
+            <div class="profile">
+                <table style="margin-left:auto;margin-right:auto;">
+                    <th style="padding:15px;">키(cm)</th>
+                    <th style="padding:15px;">몸무게(kg)</th>
+                    <th style="padding:15px;">나이</th>
+                    <th style="padding:15px;">성별</th>
+                    <tr>
+                        <td>{{ target_user.profile.height }}</td>
+                        <td>{{ target_user.profile.weight }}</td>
+                        <td>{{ target_user.profile.age }}</td>
+                        <td>{{ target_user.profile.gender }}</td>
+                    </tr>
+                </table>
+                <hr>
+
+                <table style="margin-left:auto;margin-right:auto;">
+                    <th style="padding:15px;"></th>
+                    <th style="padding:15px;"></th>
+                    <tr>
+                        <td style="padding-right:15px;"><b>활동 및 운동 수준</b></td>
+                        <td>{{ target_user.profile.activity }}</td>
+                    </tr>
+                    <tr>
+                        <td style="padding-right:15px;"><b>기초대사량</b></td>
+                        <td>{{ target_user.profile.bmr }} Kcal</td>
+                    </tr>
+                    <tr>
+                        <td style="padding-right:15px;"><b>활동대사량</b></td>
+                        <td>{{ target_user.profile.caloric_burn }} Kcal</td>
+                    </tr>
+                </table>
+            </div>
+
+            <hr>
+            {% else %}
+                {% if target_user == user %}
+                <a href="{% url 'profileapp:create' %}">
+                    <h2 style="font-family: 'NanumSquareB'">
+                        Create Profile
+                    </h2>
+                </a>
+                {% else %}
+                <h2>
+                    잘못된 접근입니다.
+                </h2>
+                {% endif %}
+            {% endif %}
+
+            {% if target_user == user %}
+            <a class="material-icons"
+                style="box-shadow: 0 0 4px #ccc; border-radius: 10rem; padding: .4rem;"
+                href="{% url 'accountapp:update' pk=user.pk %}">
+                settings
+            </a>
+            <a class="material-icons"
+                style="box-shadow: 0 0 4px #fcc; border-radius: 10rem; padding: .4rem;"
+                href="{% url 'accountapp:delete' pk=user.pk %}">
+                cancel
+            </a>
+            {% endif %}
+
+        </div>
+    </div>
+
+{% endblock %}

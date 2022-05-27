@@ -1,0 +1,26 @@
+{% extends 'base.html' %}
+{% load bootstrap4 %}
+{% load static %}
+{% block content %}
+
+<head>
+    <link rel="stylesheet" href="{% static 'css/calendar.css' %}">
+    <link rel="stylesheet" href="{% static 'css/diet.css' %}">
+    <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css" rel="stylesheet" >
+</head>
+
+<div class="container">
+    <div class="calories">
+        <p class="activityCalories">활동 대사량 {{ profile.caloric_burn }} kcal</p>
+        <p class="totalCalories">{{ diet.energy }} kcal</p>
+        <P class="basalCalories">기초 대사량: {{ profile.bmr }} kcal</P>
+    </div>
+
+    {% include 'dietapp/daily/calendar.html' %}
+</div>
+
+<script src="{% static 'js/calendar.js' %}"></script>
+<script src="{% static 'js/diet.js' %}"></script>
+<script src="{% static 'js/multiple_upload.js' %}"></script>
+
+{% endblock %}

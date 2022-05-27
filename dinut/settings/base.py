@@ -11,33 +11,13 @@ https://docs.djangoproject.com/en/3.2/ref/settings/
 """
 
 from pathlib import Path
+import os, environ
 from django.urls import reverse_lazy
-import os
-import environ
 import torch
-
-env = environ.Env(
-    # set casting, default value
-    DEBUG=(bool, True)
-)
+from tensorflow.keras import models
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
-BASE_DIR = Path(__file__).resolve().parent.parent
-
-# Take environment variables from .env file
-environ.Env.read_env(os.path.join(BASE_DIR, '.env'))
-
-
-# Quick-start development settings - unsuitable for production
-# See https://docs.djangoproject.com/en/3.2/howto/deployment/checklist/
-
-# SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = env('SECRET_KEY')
-
-# SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = env('DEBUG')
-
-ALLOWED_HOSTS = []
+BASE_DIR = Path(__file__).resolve().parent.parent.parent
 
 
 # Application definition
@@ -86,15 +66,10 @@ TEMPLATES = [
 WSGI_APPLICATION = 'dinut.wsgi.application'
 
 
-# Database
-# https://docs.djangoproject.com/en/3.2/ref/settings/#databases
+# Default primary key field type
+# https://docs.djangoproject.com/en/3.2/ref/settings/#default-auto-field
 
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
-    }
-}
+DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 
 # Password validation
@@ -144,15 +119,26 @@ MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 MEDIA_ROOT_URL = '.'
 
+
+# Redirect urls
+
 LOGIN_REDIRECT_URL = reverse_lazy('home')
 LOGOUT_REDIRECT_URL = reverse_lazy('accountapp:login')
 
-DL_MODELS = {
-    'YOLOv5': torch.hub.load('ultralytics/yolov5', 'yolov5s'),
-    'InceptionV3': None,
+
+# Predict models
+
+MODEL_ROOT = os.path.join(BASE_DIR, 'model')
+YOLO_HOME = os.path.join(MODEL_ROOT, 'ultralytics/yolov5')
+torch.hub.set_dir(MODEL_ROOT)
+
+MODEL_PATH = {
+    'YOLOv5': os.path.join(MODEL_ROOT, 'yolov5s.pt'),
+    'InceptionV3': os.path.join(MODEL_ROOT, 'inceptionv3.h5'),
 }
 
-# Default primary key field type
-# https://docs.djangoproject.com/en/3.2/ref/settings/#default-auto-field
-
-DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+DL_MODELS = {
+    # 'YOLOv5': torch.hub.load('ultralytics/yolov5', 'yolov5s.pt'), # load from remote
+    'YOLOv5': torch.hub.load(YOLO_HOME, model='custom', source='local', path=MODEL_PATH['YOLOv5']),
+    'InceptionV3': models.load_model(MODEL_PATH['InceptionV3']),
+}

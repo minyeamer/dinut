@@ -4,6 +4,7 @@ from PIL import ImageFont, ImageDraw, Image
 import cv2
 import numpy as np
 import pandas as pd
+import tensorflow as tf
 
 STATIC_DIR = settings.STATIC_ROOT_URL + settings.STATIC_URL
 FONT = ImageFont.truetype(STATIC_DIR + 'fonts/NanumSquareB.otf', size=16)
@@ -26,7 +27,7 @@ def detect_food(image_url: str, bbox: Optional[bool] = True) -> List[str]:
     else:
         food_list.append(predict_food(diet_image))
 
-    return food_list
+    return sorted(food_list)
 
 
 def detect_bowls(diet_image: np.ndarray) -> pd.DataFrame:
@@ -43,7 +44,9 @@ def predict_food(diet_image: np.ndarray) -> str:
     import random # InceptionV3 모델 완성 전 디버깅용 코드
     debug = ['밥','닭가슴살','가츠동','감자튀김','국수'] # InceptionV3 모델 완성 전 디버깅용 코드
 
-    model = settings.DL_MODELS['InceptionV3']
+    # model = settings.DL_MODELS['InceptionV3']
+    # diet_image = tf.expand_dims(cv2.resize(diet_image, dsize=(299, 299)), axis=0)
+    # predict = model.predict(diet_image)
     result = random.choice(debug) # InceptionV3 모델 완성 전 디버깅용 코드
 
     return result

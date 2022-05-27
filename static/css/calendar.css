@@ -1,7 +1,7 @@
 .calories {
     width: 100%;
     background-color: hsl(0, 0%, 70%);
-  
+
     position: relative;
     top: -15px;
 }
@@ -212,17 +212,17 @@
     justify-content: center;
     align-items: center;
     border: 3px dashed #dbdbdb;
-  }
-  .diet-event .upload-box .drag-file.highlight {
+}
+.diet-event .upload-box .drag-file.highlight {
     border: 3px dashed red;
-  }
-  .diet-event .upload-box .drag-file .image {
+}
+.diet-event .upload-box .drag-file .image {
     width: 40px;
-  }
-  .diet-event .upload-box .drag-file .message {
+}
+.diet-event .upload-box .drag-file .message {
     margin-bottom: 0;
-  }
-  .diet-event .upload-box .file-label {
+}
+.diet-event .upload-box .file-label {
     margin-top: 30px;
     background-color: #5b975b;
     color: #fff;
@@ -231,9 +231,9 @@
     width: 100px;
     border-radius: 6px;
     cursor: pointer;
-  }
+}
 
-  .diet-event .upload-box .delete-label {
+.diet-event .upload-box .delete-label {
     margin-top: 30px;
     background-color: hsl(0, 100%, 63%);
     color: #fff;
@@ -242,11 +242,11 @@
     width: 90px;
     border-radius: 6px;
     cursor: pointer;
-  }
+}
 
-  .diet-event .upload-box .file {
+.diet-event .upload-box .file {
     display: none;
-  }
+}
 
 .diet_set{
     text-align: center;
@@ -272,7 +272,7 @@
 }
 
 @media screen and (max-width: 280px) {
- 
+
     .calendar {
         width: 50%;
         margin: auto;
@@ -303,7 +303,7 @@
 }
 
 @media screen and (min-width: 280px) {
- 
+
     .calendar {
         width: 50%;
         margin: auto;
@@ -333,7 +333,7 @@
 }
 
 @media screen and (min-width: 600px) {
- 
+
     .calendar {
         width: 50%;
         margin: auto;

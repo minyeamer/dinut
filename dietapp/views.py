@@ -1,22 +1,44 @@
-from django.shortcuts import render
-from django.conf import settings
+from django.views import View
+from django.contrib.auth.mixins import LoginRequiredMixin
 from django.http import HttpRequest, HttpResponse
-from dietapp.forms import DietImageUploadForm
+from django.shortcuts import render, get_object_or_404
+from django.urls import reverse_lazy
+from dietapp.forms import DietImageUploadForm, DailyImageUploadForm
+from dietapp.query import get_nutrition_charts, get_similar_diet
+from profileapp.models import Profile
 
 
-def diet_upload_view(request: HttpRequest) -> HttpResponse:
-    if request.method == 'POST':
+class DietUploadView(View):
+    def post(self, request: HttpRequest) -> HttpResponse:
         form = DietImageUploadForm(request.POST, request.FILES)
         if form.is_valid():
             diet = form.save(commit=True)
-            if request.user:
-                diet.uploader = request.user
-            diet.fill_values()
-            return render(request, 'dietapp/diet.html', {'form':form,'diet':diet})
-    else:
+            diet.fill_values(request.user)
+            context = {'form':form, 'diet':diet}
+            context['chart'] = get_nutrition_charts(diet.id)
+            context['similar'] = get_similar_diet(diet.id)
+            return render(request, 'dietapp/diet/main.html', context)
+
+    def get(self, request: HttpRequest) -> HttpResponse:
         form = DietImageUploadForm()
-        return render(request, 'dietapp/diet.html', {'form':form})
+        return render(request, 'dietapp/diet/main.html', {'form':form})
 
 
-def daily_diet_view(request: HttpRequest) -> HttpResponse:
-    return render(request, 'dietapp/daily_diet.html', {})
+class DailyDietView(LoginRequiredMixin, View):
+    login_url = reverse_lazy('accountapp:login')
+
+    def post(self, request: HttpRequest) -> HttpResponse:
+        profile = get_object_or_404(Profile, user=request.user)
+        form = DailyImageUploadForm(request.POST, request.FILES)
+        print(request.FILES)
+        print('='*30)
+        if form.is_valid():
+            daily = form.save(commit=True)
+            daily.fill_values(request.user)
+            context = {'form':form, 'daily':daily, 'profile':profile}
+            return render(request, 'dietapp/daily/main.html', context)
+
+    def get(self, request: HttpRequest) -> HttpResponse:
+        profile = get_object_or_404(Profile, user=request.user)
+        form = DailyImageUploadForm()
+        return render(request, 'dietapp/daily/main.html', {'profile':profile})

@@ -16,7 +16,7 @@ class DietUploadView(View):
             diet.fill_values(request.user)
             context = {'form':form, 'diet':diet}
             context['chart'] = get_nutrition_charts(diet.id)
-            context['diet'] = get_similar_diet(diet.id)
+            context['similar'] = get_similar_diet(diet.id)
             return render(request, 'dietapp/diet/main.html', context)
 
     def get(self, request: HttpRequest) -> HttpResponse:

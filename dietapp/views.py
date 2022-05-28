@@ -27,11 +27,17 @@ class DietUploadView(View):
 class DailyDietView(LoginRequiredMixin, View):
     login_url = reverse_lazy('accountapp:login')
 
-    def post(self, request: HttpRequest) -> HttpResponse:
+    def execute_profile_validation(request) :
         try:
             profile = Profile.objects.get(user=request.user)
         except :
             return redirect('accountapp:detail',pk=request.user.id)
+        finally :
+            return profile
+
+
+    def post(self, request: HttpRequest) -> HttpResponse:
+        profile = DailyDietView.execute_profile_validation(request)
 
         form = DailyImageUploadForm(request.POST, request.FILES)
         print(request.FILES)
@@ -45,18 +51,12 @@ class DailyDietView(LoginRequiredMixin, View):
             return render(request, 'dietapp/daily/main.html', context)
 
     def get(self, request: HttpRequest) -> HttpResponse:
-         try:
-             profile = Profile.objects.get(user=request.user)
-         except :
-             return redirect('accountapp:detail',pk=request.user.id)
-         
-         return render(request, 'dietapp/daily/main.html', {'profile':profile})
+        profile = DailyDietView.execute_profile_validation(request)
+
+        return render(request, 'dietapp/daily/main.html', {'profile':profile})
     
     def update(request,pk):
-        try:
-            profile = Profile.objects.get(user=request.user)
-        except :
-            return redirect('accountapp:detail',pk=request.user.id)
+        profile = DailyDietView.execute_profile_validation(request)
             
         try:
             dailyDietImage = DailyDietImage.objects.get(pk)

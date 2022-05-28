@@ -1,12 +1,12 @@
 from django.views import View
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.http import HttpRequest, HttpResponse
-from django.shortcuts import render, get_object_or_404
+from django.shortcuts import render, redirect, get_object_or_404 
 from django.urls import reverse_lazy
 from dietapp.forms import DietImageUploadForm, DailyImageUploadForm
 from dietapp.query import get_nutrition_charts, get_similar_diet
+from dietapp.models import DailyDietImage
 from profileapp.models import Profile
-
 
 class DietUploadView(View):
     def post(self, request: HttpRequest) -> HttpResponse:
@@ -28,17 +28,57 @@ class DailyDietView(LoginRequiredMixin, View):
     login_url = reverse_lazy('accountapp:login')
 
     def post(self, request: HttpRequest) -> HttpResponse:
-        profile = get_object_or_404(Profile, user=request.user)
+        try:
+            profile = Profile.objects.get(user=request.user)
+        except :
+            return redirect('accountapp:detail',pk=request.user.id)
+
         form = DailyImageUploadForm(request.POST, request.FILES)
         print(request.FILES)
         print('='*30)
+
         if form.is_valid():
-            daily = form.save(commit=True)
+            daily = form.save(uploader=request.user)
             daily.fill_values(request.user)
             context = {'form':form, 'daily':daily, 'profile':profile}
+
             return render(request, 'dietapp/daily/main.html', context)
 
     def get(self, request: HttpRequest) -> HttpResponse:
-        profile = get_object_or_404(Profile, user=request.user)
-        form = DailyImageUploadForm()
-        return render(request, 'dietapp/daily/main.html', {'profile':profile})
+         try:
+             profile = Profile.objects.get(user=request.user)
+         except :
+             return redirect('accountapp:detail',pk=request.user.id)
+         
+         return render(request, 'dietapp/daily/main.html', {'profile':profile})
+    
+    def update(request,pk):
+        try:
+            profile = Profile.objects.get(user=request.user)
+        except :
+            return redirect('accountapp:detail',pk=request.user.id)
+            
+        try:
+            dailyDietImage = DailyDietImage.objects.get(pk)
+        except :
+            return redirect('diteapp:daily:main')
+            
+        if request.method == 'POST':
+            form = DailyImageUploadForm(request.POST,instance=dailyDietImage) 
+            if form.is_valid():
+                form.save()
+                context = {'form':form, 'daily':dailyDietImage, 'profile':profile}
+                return render(request, 'dietapp/daily/main.html', context)
+        else:
+            form = DailyImageUploadForm(instance=dailyDietImage)
+        return render(request,'update.html',{'form':form})
+
+    def delete(request,pk):
+        dailyDietImage = DailyDietImage.objects.get(pk=pk)
+        dailyDietImage.delete() 
+        return redirect('diteapp:daily:main')
+
+
+    
+        
+

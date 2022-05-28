@@ -14,7 +14,7 @@ from pathlib import Path
 import os, environ
 from django.urls import reverse_lazy
 import torch
-from tensorflow.keras import models
+from tensorflow.keras.models import load_model as load_keras_model
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent.parent
@@ -140,5 +140,5 @@ MODEL_PATH = {
 DL_MODELS = {
     # 'YOLOv5': torch.hub.load('ultralytics/yolov5', 'yolov5s.pt'), # load from remote
     'YOLOv5': torch.hub.load(YOLO_HOME, model='custom', source='local', path=MODEL_PATH['YOLOv5']),
-    'InceptionV3': models.load_model(MODEL_PATH['InceptionV3']),
+    'InceptionV3': load_keras_model(MODEL_PATH['InceptionV3']),
 }

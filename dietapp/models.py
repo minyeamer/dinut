@@ -57,6 +57,7 @@ class Nutrition(AbstractNutrition):
 
 
 class Diet(AbstractNutrition):
+    diet_name = models.CharField('식단명', max_length=255, unique=True)
     food_list = models.TextField('식품 목록')
 
     class Meta:
@@ -64,7 +65,7 @@ class Diet(AbstractNutrition):
         verbose_name_plural = '식단'
 
     def __str__(self):
-        return f'{self.food_list} - {self.energy} kcal'
+        return f'{self.diet_name} ({self.food_list}) - {self.energy} kcal'
 
 
 class DietImage(AbstractNutrition, AbstractUpload):

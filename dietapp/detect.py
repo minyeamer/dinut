@@ -4,7 +4,6 @@ from PIL import ImageFont, ImageDraw, Image
 import cv2
 import numpy as np
 import pandas as pd
-from tensorflow import exapnd_dims
 
 STATIC_DIR = settings.STATIC_ROOT_URL + settings.STATIC_URL
 FONT = ImageFont.truetype(STATIC_DIR + 'fonts/NanumSquareB.otf', size=16)
@@ -45,7 +44,7 @@ def predict_food(diet_image: np.ndarray) -> str:
     debug = ['밥','닭가슴살','가츠동','감자튀김','국수'] # InceptionV3 모델 완성 전 디버깅용 코드
 
     # model = settings.DL_MODELS['InceptionV3']
-    # diet_image = tf.expand_dims(cv2.resize(diet_image, dsize=(299, 299)), axis=0)
+    # diet_image = np.expand_dims(cv2.resize(diet_image, dsize=(299, 299)), axis=0)
     # predict = model.predict(diet_image)
     result = random.choice(debug) # InceptionV3 모델 완성 전 디버깅용 코드
 

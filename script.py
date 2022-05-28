@@ -2,7 +2,7 @@ import csv
 import os
 import django
 
-os.environ.setdefault("DJANGO_SETTINGS_MODULE", "dinut.settings")
+os.environ.setdefault("DJANGO_SETTINGS_MODULE", "dinut.settings.local")
 django.setup()
 
 from dietapp.models import Nutrition, Diet

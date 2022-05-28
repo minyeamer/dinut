@@ -21,17 +21,17 @@ class AbstractNutrition(models.Model):
         abstract = True
 
     def fill_nutritions(self, nutrition_info: Dict[str, float]):
-        self.energy = nutrition_info['energy']
-        self.carb = nutrition_info['carb']
-        self.protein = nutrition_info['protein']
-        self.fat = nutrition_info['fat']
-        self.sugar = nutrition_info['sugar']
-        self.fiber = nutrition_info['fiber']
-        self.sodium = nutrition_info['sodium']
-        self.vitamin_a = nutrition_info['vitamin_a']
-        self.riboflavin = nutrition_info['riboflavin']
-        self.calcium = nutrition_info['calcium']
-        self.iron = nutrition_info['iron']
+        self.energy = round(nutrition_info['energy'],2)
+        self.carb = round(nutrition_info['carb'],2)
+        self.protein = round(nutrition_info['protein'],2)
+        self.fat = round(nutrition_info['fat'],2)
+        self.sugar = round(nutrition_info['sugar'],2)
+        self.fiber = round(nutrition_info['fiber'],2)
+        self.sodium = round(nutrition_info['sodium'],2)
+        self.vitamin_a = round(nutrition_info['vitamin_a'],2)
+        self.riboflavin = round(nutrition_info['riboflavin'],2)
+        self.calcium = round(nutrition_info['calcium'],2)
+        self.iron = round(nutrition_info['iron'],2)
 
 
 class AbstractUpload(models.Model):

@@ -28,7 +28,7 @@ def sum_nutritions(image_urls: List[str]) -> DefaultDict[str, float]:
     calc_result = defaultdict(int)
 
     for image_url in image_urls:
-        detect_result = analyze_diet(settings.MEDIA_ROOT_URL + image_url)
+        detect_result = analyze_diet(image_url)
 
         for nutrition in NUTRITIONS:
             calc_result[nutrition] += detect_result[nutrition]

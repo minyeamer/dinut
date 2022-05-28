@@ -1,51 +1,60 @@
-<!--TODO JS단에서 for문 써서 랜더링하기-->
-<form method="POST" enctype="multipart/form-data">
-    {% csrf_token %}
-    <div class="diet-event">
-        <div class="upload-box">
-            <div id="drop-file-morning" class="drag-file">
-                <img src="https://img.icons8.com/pastel-glyph/2x/image-file.png" alt="파일 아이콘" class="image">
-                <p class="message">Breakfast Image</p>
+{% load static %}     
+     <!--TODO JS단에서 for문 써서 랜더링하기-->
+          <form id='daily_form' method="POST" enctype="multipart/form-data">
+            {% csrf_token %} 
+            <div class="diet-event">
+                <div class="upload-box">
+                    <div id="drop-file-morning" class="drag-file">
+                        <p class="px-3 message">Breakfast Image</p>
+                            <div id="morining-pre">
+                            </div>
+                    </div>
+                    <label class="file-label" for="morning_diet">Choose</label>
+                    <input class="hidden" type="file" id="morning_diet" name="morning_diet" accept="image/png, image/jpeg, image/gif"  onchange='inputRenderFile(this.id,this.files)'  required="false" hidden>
+                    <label class="delete-label" for="delete_morning_diet">delete</label>
+                    <button type="button" class="invisible" id="delete_morning_diet" onclick="deleteImage(this.id)"></button>
+                </div>
+        
+                <div class="upload-box">
+                    <div id="drop-file-lunch" class="drag-file">
+                        <p class="px-3 message">Lunch Image</p>
+                            <div id="lunch-pre">
+                            </div>
+                    </div>
+                    <label class="file-label" for="lunch_diet">Choose</label>
+                    <input class="lunch-file" id="lunch_diet" name="lunch_diet" type="file" accept="image/png, image/jpeg, image/gif" onchange='inputRenderFile(this.id,this.files)' required="false" hidden>
+                    <label class="delete-label" for="delete_lunch_diet">delete</label>
+                    <button class="invisible delete_lunch_diet" id="delete_lunch_diet" onclick="deleteImage(this.id)" type="button"></button>
+                </div>
+                <div class="upload-box">
+                    <div id="drop-file-dinner" class="drag-file">
+                        <p class="px-3 message">Dinner Image</p>
+                            <div id="dinner-pre">
+                            </div>
+                    </div>
+                    <label class="file-label" for="dinner_diet">Choose</label>
+                    <input class="dinner-file" id="dinner_diet" name="dinner_diet" type="file"  accept="image/png, image/jpeg, image/gif" onchange='inputRenderFile(this.id,this.files)' required="false" hidden>
+                    <label class="delete-label" for="delete_dinner_diet">delete</label>
+                    <button class="invisible delete_dinner_diet" id="delete_dinner_diet" onclick="deleteImage(this.id)" type="button"></button>
+                </div>
+
+                <div class="upload-box">
+                    <div id="drop-file-snack" class="drag-file">
+                        <p class="px-3 message">Dissert Image</p>
+                            <div id="snack-pre">
+                            </div>
+                    </div>
+                    <label class="file-label" for="snack_diet">Choose</label>
+                    <input class="snack-file" id="snack_diet" name="snack_diet" type="file" accept="image/png, image/jpeg, image/gif" onchange='inputRenderFile(this.id,this.files)' required="false" hidden>
+                    <label class="delete-label" for="delete_snack_diet">delete</label>
+                    <button class="invisible delete_snack_diet"  id="delete_snack_diet" onclick="deleteImage(this.id)" type="button"></button>
+                </div>
             </div>
-            <label class="file-label" for="chooseFile">Choose</label>
-            <input class="file" id="chooseFile" name="morning_diet" type="file" onchange="dropFile.handleFiles(this.files)" accept="image/png, image/jpeg, image/gif">
-            <label class="delete-label" for="chooseFile">delete</label>
-            <button class="invisible" type="button"></button>
-            <!--<div class="preview" id="preview"></div>-->
         </div>
-        <div class="upload-box">
-            <div id="drop-file-lunch" class="drag-file">
-                <img src="https://img.icons8.com/pastel-glyph/2x/image-file.png" alt="파일 아이콘" class="image">
-                <p class="message">Lunch Image</p>
-            </div>
-            <label class="file-label" for="chooseFile">Choose</label>
-            <input class="file" id="chooseFile" name="lunch_diet" type="file" onchange="dropFile.handleFiles(this.files)" accept="image/png, image/jpeg, image/gif">
-            <label class="delete-label" for="chooseFile">delete</label>
-            <button class="invisible" type="button"></button>
-        </div>
-        <div class="upload-box">
-            <div id="drop-file-dinner" class="drag-file">
-                <img src="https://img.icons8.com/pastel-glyph/2x/image-file.png" alt="파일 아이콘" class="image">
-                <p class="message">Dinner Image</p>
-            </div>
-            <label class="file-label" for="chooseFile">Choose</label>
-            <input class="file" id="chooseFile" name="dinner_diet" type="file" onchange="dropFile.handleFiles(this.files)" accept="image/png, image/jpeg, image/gif">
-            <label class="delete-label" for="chooseFile">delete</label>
-            <button class="invisible" type="button"></button>
-        </div>
-        <div class="upload-box">
-            <div id="drop-file-snack" class="drag-file">
-                <img src="https://img.icons8.com/pastel-glyph/2x/image-file.png" alt="파일 아이콘" class="image" required="true">
-                <p class="message">Dissert Image</p>
-            </div>
-            <label class="file-label" for="chooseFile">Choose</label>
-            <input class="file" id="chooseFile" name="snack_diet" type="file" onchange="dropFile.handleFiles(this.files)" accept="image/png, image/jpeg, image/gif">
-            <label class="delete-label" for="chooseFile">delete</label>
-            <button class="invisible" type="button"></button>
-        </div>
+    </from>
+    <div class="diet_set">
+        <button class="diet_btn" onclick="validationCheck()">submit</button>
     </div>
 
-    <div class="diet_set">
-        <button class="diet_btn" type="submit">Submit</button>
-    </div>
-</form>
+<!-- 함수 안먹혀서 추가 배치.-->
+<script src="{% static 'js/multiple_upload.js' %}"></script>

@@ -4,7 +4,7 @@ from PIL import ImageFont, ImageDraw, Image
 import cv2
 import numpy as np
 import pandas as pd
-import tensorflow as tf
+from tensorflow import exapnd_dims
 
 STATIC_DIR = settings.STATIC_ROOT_URL + settings.STATIC_URL
 FONT = ImageFont.truetype(STATIC_DIR + 'fonts/NanumSquareB.otf', size=16)

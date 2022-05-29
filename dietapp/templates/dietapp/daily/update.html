@@ -1,0 +1,100 @@
+{% extends 'base.html' %}
+{% load bootstrap4 %}
+{% load static %}
+{% block content %}
+{% load static %}     
+<head>
+    <link rel="stylesheet" href="{% static 'css/diet.css' %}">
+    <link rel="stylesheet" href="{% static 'css/calendar.css' %}">
+    <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css" rel="stylesheet" >
+
+</head>
+     <!--TODO JS단에서 for문 써서 랜더링하기-->  
+     <div class="container">     
+        <h2 class="title">Update</h2>
+        <div class="diet_info">
+            <div class="diet_ym">
+                <span class="diet-year">{{date_list.year}}</span>년
+                <span class="diet-month">{{date_list.month}}</span>월
+                <span class="diet-day">{{date_list.day}}</span>일
+            </div>
+        </div>
+        <hr>
+          <form id='daily_form' method="POST" enctype="multipart/form-data">
+            <input type="hidden" id="target_date" name="target_date" value="{{daily.target_date}}">
+            {% csrf_token %} 
+            <div class="diet-event">
+                {% if daily.morning_diet %}
+                <div class="upload-box">
+                    <p class="px-5 message">Breakfast Image</p>
+                    <div id="drop-file-morning" class="drag-file">
+                            <div id="morining-pre">
+                                <img src='{{daily.morning_diet.url}}' width="150px">
+                            </div>
+                    </div>
+                    <label class="file-label" for="morning_diet">Choose</label>
+                    <input class="hidden" type="file" id="morning_diet" name="morning_diet" accept="image/png, image/jpeg, image/gif" value="{{daily.morning_diet}}" onchange='inputRenderFile(this.id,this.files)'  required="false" hidden>
+                    <label class="delete-label" for="delete_morning_diet">delete</label>
+                    <button type="button" class="invisible" id="delete_morning_diet" onclick="deleteImage(this.id)"></button>
+                </div>
+                {% else %}
+                    {% include 'dietapp/daily/upload_box/morning_diet_box.html' %}
+                {% endif %}
+                {% if daily.lunch_diet %}
+                <div class="upload-box">
+                    <p class="px-5 message">Lunch Image</p>
+                    <div id="drop-file-lunch" class="drag-file">
+                            <div id="lunch-pre">
+                                <img src='{{daily.lunch_diet.url}}' width="150px">
+                            </div>
+                    </div>
+                    <label class="file-label" for="lunch_diet">Choose</label>
+                    <input class="lunch-file" id="lunch_diet" name="lunch_diet" type="file" accept="image/png, image/jpeg, image/gif" value="{{daily.lunch_diet}}"  onchange='inputRenderFile(this.id,this.files)' required="false" hidden>
+                    <label class="delete-label" for="delete_lunch_diet">delete</label>
+                    <button class="invisible delete_lunch_diet" id="delete_lunch_diet" onclick="deleteImage(this.id)" type="button"></button>
+                </div>
+                {% else %}
+                    {% include 'dietapp/daily/upload_box/lunch_diet_box.html' %}
+                {% endif %}
+                {% if daily.dinner_diet %}
+                <div class="upload-box">
+                    <p class="px-5 message">Dinner Image</p>
+                    <div id="drop-file-dinner" class="drag-file">
+                            <div id="dinner-pre">
+                                <img src='{{daily.dinner_diet.url}}' width="150px">
+                            </div>
+                    </div>
+                    <label class="file-label" for="dinner_diet">Choose</label>
+                    <input class="dinner-file" id="dinner_diet" name="dinner_diet" type="file"  accept="image/png, image/jpeg, image/gif" value="{{daily.dinner_diet}}" onchange='inputRenderFile(this.id,this.files)' required="false" hidden>
+                    <label class="delete-label" for="delete_dinner_diet">delete</label>
+                    <button class="invisible delete_dinner_diet" id="delete_dinner_diet" onclick="deleteImage(this.id)" type="button"></button>
+                </div>
+                {% else %}
+                    {% include 'dietapp/daily/upload_box/lunch_diet_box.html' %}
+                {% endif %}
+                {% if daily.snack_diet %}
+                <div class="upload-box">
+                    <p class="px-5 message">Dissert Image</p>
+                    <div id="drop-file-snack" class="drag-file">
+                        <div id="snack-pre">
+                                <img src='{{daily.snack_diet.url}}' width="150px">
+                            </div>
+                    </div>
+                    <label class="file-label" for="snack_diet">Choose</label>
+                    <input class="snack-file" id="snack_diet" name="snack_diet" type="file" accept="image/png, image/jpeg, image/gif"  value="{{daily.snack_diet}}" onchange='inputRenderFile(this.id,this.files)' required="false" hidden>
+                    <label class="delete-label" for="delete_snack_diet">delete</label>
+                    <button class="invisible delete_snack_diet"  id="delete_snack_diet" onclick="deleteImage(this.id)" type="button"></button>
+                </div>
+                {% else %}
+                     {% include 'dietapp/daily/upload_box/snack_diet_box.html' %}
+                {% endif %} 
+            </div>
+        </div>
+    </from>
+    </div>
+    <div class="diet_set">
+        <button class="diet_btn" type="button" onclick="validationCheck()">update</button>
+    </div>
+    <script src="{% static 'js/multiple_upload.js' %}"></script>
+
+{% endblock %}

@@ -39,9 +39,9 @@ MODEL_ROOT = os.path.join(BASE_DIR, 'model')
 
 DL_MODELS = dict()
 
-print(os.path(BASE_DIR))
+print(BASE_DIR)
 print(os.listdir(BASE_DIR))
-print(os.path(MODEL_ROOT))
+print(MODEL_ROOT)
 print(os.listdir(MODEL_ROOT))
 
 from torch import hub

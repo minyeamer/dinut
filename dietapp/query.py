@@ -91,8 +91,3 @@ def get_similar_diet(id: int) -> str:
 
 def get_date_fommater(target_date):
     return {'year': target_date[:4], 'month':target_date[5:7], 'day':target_date[8:10],'target_date':target_date}
-
-def string_to_date(datetime_string):
-    query_date = datetime.strptime(datetime_string, '%Y-%m-%d')
-    return query_date
-     

@@ -42,14 +42,14 @@ function DropFile(dropAreaId, fileListId, previewId) {
 
   
   //드래그된 파일로 대체해주기 
-    var $file = document.getElementById(fileListId)
+    var $file = document.getElementById(fileListId);
     $file.files = files
     renderFile(files)
   }
 
   //각각의 파일 미리보기 렌더링
   function renderFile(files){
-    var frame = document.getElementById(previewId)
+    var frame = document.getElementById(previewId);
     const reader = new FileReader();
     deleteChilds(frame);
     
@@ -84,16 +84,16 @@ function DropFile(dropAreaId, fileListId, previewId) {
     const reader = new FileReader();
 
     if (id == 'morning_diet'){
-      target = document.getElementById(previewList[0])
+      target = document.getElementById(previewList[0]);
 
     }else if(id == 'lunch_diet'){
-      target = document.getElementById(previewList[1])
+      target = document.getElementById(previewList[1]);
 
     }else if(id == 'dinner_diet'){
-      target = document.getElementById(previewList[2])
+      target = document.getElementById(previewList[2]);
 
     }else{
-      target = document.getElementById(previewList[3])
+      target = document.getElementById(previewList[3]);
     }
     deleteChilds(target);
     reader.addEventListener('load', () => {
@@ -112,27 +112,29 @@ function DropFile(dropAreaId, fileListId, previewId) {
     var $file = null;
 
     if (id == 'delete_morning_diet'){
-      target = document.getElementById(previewList[0])
+      target = document.getElementById(previewList[0]);
       $file = document.getElementById(fileList[0]);
 
     }else if(id == 'delete_lunch_diet'){
-      target = document.getElementById(previewList[1])
+      target = document.getElementById(previewList[1]);
       $file = document.getElementById(fileList[1]);
 
     }else if(id == 'delete_dinner_diet'){
-      target = document.getElementById(previewList[2])
+      target = document.getElementById(previewList[2]);
       $file = document.getElementById(fileList[2]);
 
     }else{ // snack
-      target = document.getElementById(previewList[3])
+      target = document.getElementById(previewList[3]);
       $file = document.getElementById(fileList[3]);
     }
     deleteChilds(target);
     $file.files = null;
+    $file.select();
+    document.selection.clear();
   }
 
   function validationCheck(){
-    form = document.getElementById('daily_form');
+    const form = document.getElementById('daily_form');
 
     if(document.getElementById(fileList[0]).value){
       form.submit();
@@ -151,4 +153,5 @@ function DropFile(dropAreaId, fileListId, previewId) {
       return false;
     }
   }
+
 

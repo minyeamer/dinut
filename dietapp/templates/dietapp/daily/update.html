@@ -20,6 +20,7 @@
             </div>
         </div>
         <hr>
+
           <form id='daily_form' method="POST" enctype="multipart/form-data">
             <input type="hidden" id="target_date" name="target_date" value="{{daily.target_date}}">
             {% csrf_token %} 
@@ -70,7 +71,7 @@
                     <button class="invisible delete_dinner_diet" id="delete_dinner_diet" onclick="deleteImage(this.id)" type="button"></button>
                 </div>
                 {% else %}
-                    {% include 'dietapp/daily/upload_box/lunch_diet_box.html' %}
+                    {% include 'dietapp/daily/upload_box/dinner_diet_box.html' %}
                 {% endif %}
                 {% if daily.snack_diet %}
                 <div class="upload-box">
@@ -93,8 +94,49 @@
     </from>
     </div>
     <div class="diet_set">
-        <button class="diet_btn" type="button" onclick="validationCheck()">update</button>
+        <button class="diet_btn" type="button" onclick="updateValidationCheck()">update</button>
     </div>
     <script src="{% static 'js/multiple_upload.js' %}"></script>
+    <!-- 자바스크립트 안 읽혀서 아래에 배치 -->
+    <script>
+       const morning_diet = '{{daily.morning_diet}}';
+       const lunch_diet = '{{daily.lunch_diet}}';
+       const dinner_diet = '{{daily.dinner_diet}}'
+       const snack_diet = '{{daily.snack_diet}}';
+       const form = document.getElementById('daily_form');
+
+      function updateValidationCheck(){
+        if(morning_diet){ 
+            document.getElementById('morning_diet').files[0] = morning_diet;
+            form.submit();
+        }
+        else if(lunch_diet){
+             document.getElementById('lunch_diet').files[0] = lunch_diet;
+             form.submit();
+        }
+        else if(dinner_diet){
+             document.getElementById('dinner_diet').files[0]= dinner_diet;
+             form.submit();
+        }
+        else if(snack_diet){
+            document.getElementById('snack_diet').files[0] = snack_diet;
+             form.submit();
+        }
+        else {
+          alert("파일을 1개 이상 첨부해주세요.");
+          return false;
+        }
+      }
+
+
+    </script>
+    {% if messages %}
+    {% for message in messages %}
+    <script>
+    var message = '{{ message.message }}';
+    alert(message);
+    </script>
+    {% endfor %}
+    {% endif %}
 
 {% endblock %}

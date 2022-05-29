@@ -62,3 +62,9 @@ except:
 
 DB_DIR = os.path.join(BASE_DIR, 'script')
 LABEL_PATH = os.path.join(DB_DIR, 'label.json')
+
+# Food labels
+
+with open(LABEL_PATH, 'r', encoding='UTF-8') as json_data:
+    LABEL = json.load(json_data)
+

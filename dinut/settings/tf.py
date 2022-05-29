@@ -49,3 +49,9 @@ from tensorflow.keras.models import load_model as load_keras_model
 DL_MODELS['InceptionV3'] = load_keras_model(os.path.join(MODEL_ROOT, 'inceptionv3.h5'))
 DB_DIR = os.path.join(BASE_DIR, 'script')
 LABEL_PATH = os.path.join(DB_DIR, 'label.json')
+
+# Food labels
+
+with open(LABEL_PATH, 'r', encoding='UTF-8') as json_data:
+    LABEL = json.load(json_data)
+

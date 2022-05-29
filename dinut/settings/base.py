@@ -122,9 +122,3 @@ MEDIA_ROOT_URL = '.'
 
 LOGIN_REDIRECT_URL = reverse_lazy('home')
 LOGOUT_REDIRECT_URL = reverse_lazy('accountapp:login')
-
-
-# Food labels
-
-with open(LABEL_PATH, 'r', encoding='UTF-8') as json_data:
-    LABEL = json.load(json_data)

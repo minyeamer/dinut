@@ -18,8 +18,10 @@ def detect_food(image_url: str, bbox: Optional[bool] = True) -> List[str]:
     if len(bowls) > 0:
         for bowl in bowls.iterrows():
             xmin, ymin, xmax, ymax = list(map(int,(bowl[1].tolist()[:4])))
-            result = predict_food(diet_image[xmin:xmax, ymin:ymax])
-            bbox_list.append(list(map(int,[xmin,ymin,xmax,ymax]))+[result])
+            print(ymin, ymax, xmin, xmax)
+            result = predict_food(diet_image[ymin:ymax, xmin:xmax])
+            if result:
+                bbox_list.append(list(map(int,[xmin,ymin,xmax,ymax]))+[result])
             food_list.append(result)
         if bbox:
             draw_bbox(image_url, bbox_list)
@@ -43,6 +45,7 @@ def predict_food(food_image: np.ndarray) -> str:
     model = settings.DL_MODELS['InceptionV3']
 
     if model is not None:
+        food_image = cv2.resize(food_image, (299,299))
         food_image = np.expand_dims(food_image, axis=0)
         food_preds = model.predict(food_image)
         label_index = np.argmax(food_preds)

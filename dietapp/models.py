@@ -3,7 +3,6 @@ from django.db import models
 from django.contrib.auth.models import User
 from django.core.validators import MinValueValidator
 
-
 class AbstractNutrition(models.Model):
     energy = models.FloatField('에너지(kcal)', default=0.0, validators=[MinValueValidator(0.0)])
     carb = models.FloatField('탄수화물(g)', default=0.0, validators=[MinValueValidator(0.0)])
@@ -92,10 +91,11 @@ class DietImage(AbstractNutrition, AbstractUpload):
 
 class DailyDietImage(AbstractNutrition, AbstractUpload):
     uploader = models.ForeignKey(User, on_delete=models.CASCADE, related_name='daily_diet_image')
-    morning_diet = models.ImageField('아침 식단', upload_to='images/daily/morning/%Y/%m/%d', null=True)
-    lunch_diet = models.ImageField('점심 식단', upload_to='images/daily/lunch/%Y/%m/%d', null=True)
-    dinner_diet = models.ImageField('저녁 식단', upload_to='images/daily/dinner/%Y/%m/%d', null=True)
-    snack_diet = models.ImageField('간식 식단', upload_to='images/daily/snack/%Y/%m/%d', null=True)
+    morning_diet = models.ImageField('아침 식단', upload_to='images/daily/morning/%Y/%m/%d', null=True, blank=True) 
+    lunch_diet = models.ImageField('점심 식단', upload_to='images/daily/lunch/%Y/%m/%d', null=True, blank=True)
+    dinner_diet = models.ImageField('저녁 식단', upload_to='images/daily/dinner/%Y/%m/%d', null=True, blank=True)
+    snack_diet = models.ImageField('간식 식단', upload_to='images/daily/snack/%Y/%m/%d', null=True, blank=True)
+    target_date = models.DateField('일자', auto_now=False, null=True) 
 
     class Meta:
         db_table = 'daily_diet_image'

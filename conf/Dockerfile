@@ -6,17 +6,17 @@ RUN echo "refresh"
 
 RUN git clone https://github.com/minyeamer/dinut.git
 
-COPY /home/model /home/dinut/model
-
 WORKDIR /home/dinut/
 
-RUN pip install --upgrade pip
+RUN apt-get update && pip install --upgrade pip
 
-RUN pip install -r requirements.txt --no-cache-dir
+RUN apt-get update && pip install --no-cache-dir -r requirements.txt
 
-RUN pip install gunicorn
+RUN apt-get update && pip install --no-cache-dir gunicorn
 
-RUN pip install mysqlclient
+RUN apt-get update && pip install --no-cache-dir mysqlclient
+
+RUN apt-get update && apt install -y libgl1-mesa-glx
 
 EXPOSE 8000
 

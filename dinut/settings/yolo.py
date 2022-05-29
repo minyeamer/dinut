@@ -60,3 +60,9 @@ DL_MODELS['YOLOv5'] = hub.load(YOLO_HOME, model='custom', source='local', path=Y
 DL_MODELS['InceptionV3'] = None
 DB_DIR = os.path.join(BASE_DIR, 'script')
 LABEL_PATH = os.path.join(DB_DIR, 'label.json')
+
+# Food labels
+
+with open(LABEL_PATH, 'r', encoding='UTF-8') as json_data:
+    LABEL = json.load(json_data)
+

@@ -42,3 +42,6 @@ class DailyDietView(LoginRequiredMixin, View):
         profile = get_object_or_404(Profile, user=request.user)
         form = DailyImageUploadForm()
         return render(request, 'dietapp/daily/main.html', {'profile':profile})
+
+def home(request):
+    return render(request, 'dietapp/diet/home.html')

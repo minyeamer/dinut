@@ -14,13 +14,9 @@ from pathlib import Path
 from django.urls import reverse_lazy
 import os
 import environ
-import torch
-from tensorflow.keras import models
+#import torch
+#from tensorflow.keras import models
 
-env = environ.Env(
-    # set casting, default value
-    DEBUG=(bool, True)
-)
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -33,10 +29,9 @@ environ.Env.read_env(os.path.join(BASE_DIR, '.env'))
 # See https://docs.djangoproject.com/en/3.2/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = env('SECRET_KEY')
+SECRET_KEY='django-insecure-wyp%^knii_rfjki=p)b+b*zcvom#fn7hcycrh&d7t23x*ujraf'
+DEBUG=True
 
-# SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = env('DEBUG')
 
 ALLOWED_HOSTS = []
 
@@ -148,10 +143,10 @@ MEDIA_ROOT_URL = '.'
 LOGIN_REDIRECT_URL = reverse_lazy('home')
 LOGOUT_REDIRECT_URL = reverse_lazy('accountapp:login')
 
-DL_MODELS = {
-    'YOLOv5': torch.hub.load('ultralytics/yolov5', 'yolov5s'),
-    'InceptionV3': models.load_model('inceptionv3.h5'),
-}
+# #DL_MODELS = {
+#     'YOLOv5': torch.hub.load('ultralytics/yolov5', 'yolov5s'),
+#     'InceptionV3': models.load_model('inceptionv3.h5'),
+# }
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/3.2/ref/settings/#default-auto-field

@@ -11,10 +11,8 @@ https://docs.djangoproject.com/en/3.2/ref/settings/
 """
 
 from pathlib import Path
-import os, environ
+import os, environ, json
 from django.urls import reverse_lazy
-import torch
-from tensorflow.keras.models import load_model as load_keras_model
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent.parent
@@ -129,16 +127,34 @@ LOGOUT_REDIRECT_URL = reverse_lazy('accountapp:login')
 # Predict models
 
 MODEL_ROOT = os.path.join(BASE_DIR, 'model')
-YOLO_HOME = os.path.join(MODEL_ROOT, 'ultralytics/yolov5')
-torch.hub.set_dir(MODEL_ROOT)
 
-MODEL_PATH = {
-    'YOLOv5': os.path.join(MODEL_ROOT, 'yolov5s.pt'),
-    'InceptionV3': os.path.join(MODEL_ROOT, 'inceptionv3.h5'),
-}
+DL_MODELS = dict()
 
-DL_MODELS = {
-    # 'YOLOv5': torch.hub.load('ultralytics/yolov5', 'yolov5s.pt'), # load from remote
-    'YOLOv5': torch.hub.load(YOLO_HOME, model='custom', source='local', path=MODEL_PATH['YOLOv5']),
-    'InceptionV3': load_keras_model(MODEL_PATH['InceptionV3']),
-}
+try:
+    # load yolov5, if yolov5 repository and weight exist in local
+    from torch import hub
+
+    YOLO_HOME = os.path.join(MODEL_ROOT, 'ultralytics/yolov5')
+    YOLO_WEIGHT = os.path.join(MODEL_ROOT, 'yolov5s.pt')
+    hub.set_dir(MODEL_ROOT)
+
+    DL_MODELS['YOLOv5'] = hub.load(YOLO_HOME, model='custom', source='local', path=YOLO_WEIGHT, force_reload=True),
+except:
+    # if not, load yolov5 from remote
+    DL_MODELS['YOLOv5'] = hub.load('ultralytics/yolov5', 'yolov5s.pt')
+
+try:
+    # load keras model, if keras model exists in local
+    from tensorflow.keras.models import load_model as load_keras_model
+
+    DL_MODELS['InceptionV3'] = load_keras_model(os.path.join(MODEL_ROOT, 'inceptionv3.h5'))
+except:
+    # if not, notice
+    print('keras model not found')
+    DL_MODELS['InceptionV3'] = None
+
+DB_DIR = os.path.join(BASE_DIR, 'script')
+LABEL_PATH = os.path.join(DB_DIR, 'label.json')
+
+with open(LABEL_PATH, 'r', encoding='UTF-8') as json_data:
+    LABEL = json.load(json_data)

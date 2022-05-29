@@ -1,16 +1,15 @@
-import csv
-import enum
+from django.conf import settings
 import os
 import django
-from traitlets import default
+import csv
 
 os.environ.setdefault("DJANGO_SETTINGS_MODULE", "dinut.settings.local")
 django.setup()
 
 from dietapp.models import Nutrition, Diet
 
-NUTRITION_DB = 'script/nutrition.csv'
-DIET_DB = 'script/diet.csv'
+NUTRITION_DB = os.path.join(settings.DB_DIR, 'nutrition.csv')
+DIET_DB = os.path.join(settings.DB_DIR, 'diet.csv')
 
 with open(NUTRITION_DB, 'r', encoding='UTF-8') as nutrition_csv:
     rows = csv.reader(nutrition_csv)

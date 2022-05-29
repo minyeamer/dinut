@@ -4,6 +4,7 @@ WORKDIR /home/
 
 RUN echo "refresh"
 
+ADD https://api.github.com/repos/minyeamer/dinut/git/refs/heads/main version.json
 RUN git clone https://github.com/minyeamer/dinut.git
 
 WORKDIR /home/dinut/
@@ -23,5 +24,5 @@ EXPOSE 8000
 CMD ["bash", "-c", \
     "python manage.py collectstatic --noinput --settings=dinut.settings.deploy && \
     python manage.py migrate --settings=dinut.settings.deploy && \
-    python script.py && \
+    python script.py --settings=dinut.settings.deploy && \
     gunicorn dinut.wsgi --env DJANGO_SETTINGS_MODULE=dinut.settings.deploy --bind 0.0.0.0:8000"]

@@ -122,3 +122,36 @@ MEDIA_ROOT_URL = '.'
 
 LOGIN_REDIRECT_URL = reverse_lazy('home')
 LOGOUT_REDIRECT_URL = reverse_lazy('accountapp:login')
+
+
+# Predict models
+
+MODEL_ROOT = os.path.join(BASE_DIR, 'model')
+
+DL_MODELS = dict()
+
+from torch import hub
+try:
+    YOLO_HOME = os.path.join(MODEL_ROOT, 'ultralytics/yolov5')
+    YOLO_WEIGHT = os.path.join(MODEL_ROOT, 'yolov5s.pt')
+    hub.set_dir(MODEL_ROOT)
+    DL_MODELS['YOLOv5'] = hub.load(YOLO_HOME, model='custom', source='local', path=YOLO_WEIGHT)
+except:
+    print('yolov5 model not found, load from remote')
+    DL_MODELS['YOLOv5'] = hub.load('ultralytics/yolov5', 'yolov5s.pt')
+
+try:
+    from tensorflow.keras.models import load_model as load_keras_model
+    DL_MODELS['InceptionV3'] = load_keras_model(os.path.join(MODEL_ROOT, 'inceptionv3.h5'))
+except:
+    print('keras model not found, continue without keras')
+    DL_MODELS['InceptionV3'] = None
+
+
+# Food labels
+
+DB_DIR = os.path.join(BASE_DIR, 'script')
+LABEL_PATH = os.path.join(DB_DIR, 'label.json')
+
+with open(LABEL_PATH, 'r', encoding='UTF-8') as json_data:
+    LABEL = json.load(json_data)

@@ -131,16 +131,16 @@ MODEL_ROOT = os.path.join(BASE_DIR, 'model')
 DL_MODELS = dict()
 
 from torch import hub
-try:
-    # load yolov5, if yolov5 repository and weight exist in local
-    YOLO_HOME = os.path.join(MODEL_ROOT, 'ultralytics/yolov5')
-    YOLO_WEIGHT = os.path.join(MODEL_ROOT, 'yolov5s.pt')
-    hub.set_dir(MODEL_ROOT)
-    DL_MODELS['YOLOv5'] = hub.load(YOLO_HOME, model='custom', source='local', path=YOLO_WEIGHT, force_reload=True)
-except:
-    # if not, load yolov5 from remote
-    print('yolov5 model not found')
-    DL_MODELS['YOLOv5'] = hub.load('ultralytics/yolov5', 'yolov5s.pt')
+# try:
+# load yolov5, if yolov5 repository and weight exist in local
+YOLO_HOME = os.path.join(MODEL_ROOT, 'ultralytics/yolov5')
+YOLO_WEIGHT = os.path.join(MODEL_ROOT, 'yolov5s.pt')
+hub.set_dir(MODEL_ROOT)
+DL_MODELS['YOLOv5'] = hub.load(YOLO_HOME, model='custom', source='local', path=YOLO_WEIGHT)
+# except:
+#     # if not, load yolov5 from remote
+#     print('yolov5 model not found')
+#     DL_MODELS['YOLOv5'] = hub.load('ultralytics/yolov5', 'yolov5s.pt')
 
 try:
     # load keras model, if keras model exists in local

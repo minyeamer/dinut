@@ -1,0 +1,11 @@
+<div class="upload-box">
+    <p class="px-5 message">Breakfast Image</p>
+    <div id="drop-file-morning" class="drag-file">
+            <div id="morining-pre">
+            </div>
+    </div>
+    <label class="file-label" for="morning_diet">Choose</label>
+    <input class="hidden" type="file" id="morning_diet" name="morning_diet" accept="image/png, image/jpeg, image/gif" onchange='inputRenderFile(this.id,this.files)'  required="false" hidden>
+    <label class="delete-label" for="delete_morning_diet">delete</label>
+    <button type="button" class="invisible" id="delete_morning_diet" onclick="deleteImage(this.id)"></button>
+</div>

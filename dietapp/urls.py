@@ -5,5 +5,8 @@ app_name = 'dietapp'
 
 urlpatterns = [
     path('upload/', DietUploadView.as_view(), name='upload'),
-    path('daily/', DailyDietView.as_view(), name='daily'),
+    path('daily/', DailyDietView.index, name='daily'),
+    path('daily/detail/', DailyDietView.detail, name='detail'),
+    path('daily/update/', DailyDietView.update, name='update'),
+    path('daily/delete/', DailyDietView.delete, name='delete'),
 ]

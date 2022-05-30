@@ -2,8 +2,6 @@ FROM python:3.8.8
 
 WORKDIR /home/
 
-RUN echo "refresh"
-
 ADD https://api.github.com/repos/minyeamer/dinut/git/refs/heads/main version.json
 RUN git clone https://github.com/minyeamer/dinut.git
 

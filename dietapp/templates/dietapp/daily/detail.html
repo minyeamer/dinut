@@ -1,0 +1,20 @@
+{% extends 'base.html' %}
+{% load bootstrap4 %}
+{% load static %}
+{% block content %}
+
+<head>
+    <link rel="stylesheet" href="{% static 'css/calendar.css' %}">
+    <link rel="stylesheet" href="{% static 'css/diet.css' %}">
+    <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css" rel="stylesheet" >
+</head>
+<div class="container">
+        {% if daily %}
+            {% include 'dietapp/daily/result.html' %}
+        {% else %}
+            {% include 'dietapp/daily/upload.html' %}
+        {% endif %}
+</div>
+{% endblock %}
+<script src="{% static 'js/multiple_upload.js' %}"></script>
+

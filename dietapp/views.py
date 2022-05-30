@@ -1,13 +1,11 @@
-from distutils.command.upload import upload
-import profile
 from django.views import View
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.http import HttpRequest, HttpResponse
 from django.shortcuts import render, redirect 
 from django.urls import reverse_lazy
 from dietapp.forms import DietImageUploadForm, DailyImageUploadForm
-from dietapp.query import get_nutrition_charts, get_similar_diet, get_date_fommater, string_to_date
 from dietapp.models import DailyDietImage
+from dietapp.query import get_nutrition_charts, get_similar_diet, get_date_fommater, string_to_date
 from profileapp.models import Profile
 
 class DietUploadView(View):
@@ -32,16 +30,16 @@ class DailyDietView(LoginRequiredMixin, View):
     daily_main_url = reverse_lazy('dietapp:daily')
 
     def index(request):
-         cur_user = request.user
-         if not cur_user.is_authenticated:
+        cur_user = request.user
+        if not cur_user.is_authenticated:
             return redirect(DailyDietView.login_url)
-         try:
-             profile = Profile.objects.get(user=request.user)
-         except :
+        try:
+            profile = Profile.objects.get(user=request.user)
+        except:
             return redirect(DailyDietView.profile_url, pk=request.user.id)
-         
-         return render(request, 'dietapp/daily/main.html',{'profile': profile})
-    
+        
+        return render(request, 'dietapp/daily/main.html',{'profile': profile})
+
     def detail(request):
         if request.method == 'POST': 
             form = DailyImageUploadForm(request.POST, request.FILES)
@@ -59,13 +57,12 @@ class DailyDietView(LoginRequiredMixin, View):
                 date_list = get_date_fommater(target_date)
 
                 try :
-                    dailyDietImage = DailyDietImage.objects.get(uploader=request.user, target_date=target_date)
+                    daily_image = DailyDietImage.objects.get(uploader=request.user, target_date=target_date)
                 except :
                     return render(request, 'dietapp/daily/detail.html',{'date_list':date_list })
 
-                context = {'daily': dailyDietImage, 'date_list': date_list}
+                context = {'daily': daily_image, 'date_list': date_list}
                 return render(request, 'dietapp/daily/detail.html', context)
-    
 
     def update(request):
         target_date  = request.GET.get('target_date')
@@ -73,26 +70,25 @@ class DailyDietView(LoginRequiredMixin, View):
         query_date = string_to_date(target_date)
 
         try :
-            dailyDietImage = DailyDietImage.objects.get(uploader=request.user, target_date=query_date.date())
+            daily_image = DailyDietImage.objects.get(uploader=request.user, target_date=query_date.date())
         except :
             return redirect(DailyDietView.daily_main_url)
 
         if request.method == 'POST':
-            form = DailyImageUploadForm(request.POST, request.FILES,instance=dailyDietImage)
+            form = DailyImageUploadForm(request.POST, request.FILES,instance=daily_image)
             if form.is_valid():
                 form.save(uploader=request.user)
                 redirect('dietapp:detail')
 
-        form = DailyImageUploadForm(instance=dailyDietImage)
-        context = {'daily': dailyDietImage, 'date_list':date_list}
+        form = DailyImageUploadForm(instance=daily_image)
+        context = {'daily': daily_image, 'date_list':date_list}
         return render(request,'dietapp/daily/update.html', context)       
 
     def delete(request):
         target_date  = request.GET.get('target_date')
         try :
-            dailyDietImage = DailyDietImage.objects.get(uploader=request.user, target_date=target_date)
+            daily_image = DailyDietImage.objects.get(uploader=request.user, target_date=target_date)
         except :
             return redirect(DailyDietView.daily_main_url)
-        dailyDietImage.delete() 
+        daily_image.delete() 
         return redirect(DailyDietView.daily_main_url)
-

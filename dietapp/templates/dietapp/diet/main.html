@@ -4,7 +4,7 @@
 {% block content %}
 
 <head>
-    <link rel="stylesheet" href="{% static 'css/diet.css' %}">
+    <link rel="stylesheet" href="{% static 'dietapp/css/diet.css' %}">
 
     <script type="text/javascript" src="{% static "fusioncharts/fusioncharts.js" %}"></script>
     <script type="text/javascript" src="{% static "fusioncharts/fusioncharts.charts.js" %}"></script>
@@ -23,5 +23,6 @@
 </div>
 
 <!-- HTML 렌더링 후 불러와야하기 때문에 아래에 배치 -->
-<script src="{% static 'js/upload.js' %}"></script>
+<script src="{% static 'dietapp/js/upload.js' %}"></script>
+
 {% endblock %}

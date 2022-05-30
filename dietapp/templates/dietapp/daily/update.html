@@ -7,9 +7,8 @@
     <link rel="stylesheet" href="{% static 'css/diet.css' %}">
     <link rel="stylesheet" href="{% static 'css/calendar.css' %}">
     <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css" rel="stylesheet" >
-
 </head>
-     <!--TODO JS단에서 for문 써서 랜더링하기-->  
+    <!--TODO JS단에서 for문 써서 랜더링하기-->  
      <div class="container">     
         <h2 class="title">Update</h2>
         <div class="diet_info">
@@ -20,9 +19,14 @@
             </div>
         </div>
         <hr>
+
           <form id='daily_form' method="POST" enctype="multipart/form-data">
-            <input type="hidden" id="target_date" name="target_date" value="{{daily.target_date}}">
-            {% csrf_token %} 
+              {% csrf_token %} 
+              <input type="hidden" id="target_date" name="target_date" value="{{daily.target_date}}">
+              <input type="hidden" id="morning_delete_flag" name='morning_delete_flag'value="False">
+              <input type="hidden" id="lunch_delete_flag" name='lunch_delete_flag' value="False">
+              <input type="hidden" id="dinner_delete_flag" name='dinner_delete_flag' value="False">
+              <input type="hidden" id="snack_delete_flag" name='snack_delete_flag' value="False">
             <div class="diet-event">
                 {% if daily.morning_diet %}
                 <div class="upload-box">
@@ -70,7 +74,7 @@
                     <button class="invisible delete_dinner_diet" id="delete_dinner_diet" onclick="deleteImage(this.id)" type="button"></button>
                 </div>
                 {% else %}
-                    {% include 'dietapp/daily/upload_box/lunch_diet_box.html' %}
+                    {% include 'dietapp/daily/upload_box/dinner_diet_box.html' %}
                 {% endif %}
                 {% if daily.snack_diet %}
                 <div class="upload-box">
@@ -93,8 +97,49 @@
     </from>
     </div>
     <div class="diet_set">
-        <button class="diet_btn" type="button" onclick="validationCheck()">update</button>
+        <button class="diet_btn" type="button" onclick="validationUpdate()">update</button>
     </div>
     <script src="{% static 'js/multiple_upload.js' %}"></script>
+
+    <!-- response값이 JS에서는 안 읽혀서 html 아래에 배치 -->
+    <script>
+       const morning_diet = '{{daily.morning_diet}}';
+       const lunch_diet = '{{daily.lunch_diet}}';
+       const dinner_diet = '{{daily.dinner_diet}}'
+       const snack_diet = '{{daily.snack_diet}}';
+       const form = document.getElementById('daily_form');
+
+      function validationUpdate(){
+        if(morning_diet){ 
+            document.getElementById('morning_diet').files[0] = morning_diet;
+            form.submit();
+        }
+        else if(lunch_diet){
+             document.getElementById('lunch_diet').files[1] = lunch_diet;
+             form.submit();
+        }
+        else if(dinner_diet){
+             document.getElementById('dinner_diet').files[2]= dinner_diet;
+             form.submit();
+        }
+        else if(snack_diet){
+            document.getElementById('snack_diet').files[3] = snack_diet;
+             form.submit();
+        }
+        else {
+          alert("파일을 1개 이상 첨부해주세요.");
+          return false;
+        }
+      }
+
+    </script>
+    {% if messages %}
+    {% for message in messages %}
+        <script>
+          var message = '{{ message.message }}';
+          alert(message);
+        </script>
+    {% endfor %}
+    {% endif %}
 
 {% endblock %}

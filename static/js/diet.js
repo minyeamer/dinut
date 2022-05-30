@@ -9,17 +9,17 @@ const dateFunc = ()=>{
     const year = document.querySelector('.year');
     const month = document.querySelector('.month');
 
-function getSelectedDate(year,month,day){
-    var regex = /[^0-9]/g;
-    var day = day.replace(regex, "");
-    if (day < 10){
-        day = "0" + day;
+    function getSelectedDate(year,month,day){
+        var regex = /[^0-9]/g;
+        var day = day.replace(regex, "");
+        if (day < 10 && day.length < 2){
+            day = "0" + day;
+        }
+        if (month < 10 && month.length < 2){
+            month = "0" + month;
+        }
+        return year + "-" + month + "-" + day;
     }
-    if (month < 10){
-        month = "0" + month;
-    }
-    return year + "-" + month + "-" + day;
-}
 
     dates.forEach((i)=>{
         i.addEventListener('click', ()=>{

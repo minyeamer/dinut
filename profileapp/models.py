@@ -4,7 +4,7 @@ from django.core.validators import MinValueValidator
 
 GENDERS = (
     ('M', '남성'),
-    ('W', '여성'),
+    ('F', '여성'),
 )
 
 ACTIVITY = (

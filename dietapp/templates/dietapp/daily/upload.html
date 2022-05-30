@@ -16,6 +16,11 @@
     <hr>
     <form id='daily_form' method="POST" enctype="multipart/form-data">
     <input type="hidden" id="target_date" name="target_date" value="{{date_list.target_date}}">
+    <!-- 안 쓰지만, JS를 한 파일로 공유하고 있어서 정의해야 에러가 안남-->
+    <input type="hidden" id="morning_delete_flag" name='morning_delete_flag'value="False">
+    <input type="hidden" id="lunch_delete_flag" name='lunch_delete_flag' value="False">
+    <input type="hidden" id="dinner_delete_flag" name='dinner_delete_flag' value="False">
+    <input type="hidden" id="snack_delete_flag" name='snack_delete_flag' value="False">
         {% csrf_token %} 
     <div class="diet-event">
         <div class="upload-box">

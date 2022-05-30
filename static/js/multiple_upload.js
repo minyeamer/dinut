@@ -6,8 +6,8 @@ function deleteChilds(target){
   } 
 }
 
-function DropFile(dropAreaId, fileListId, previewId) {
-    
+function DropFile(dropAreaId, fileListId, previewId, deleteFlag) {
+
   let dropArea =  document.getElementById(dropAreaId);
 
   //브라우저에서 드랍 관련한 기본 이벤트가 존재, 초기화하고 진행
@@ -40,8 +40,9 @@ function DropFile(dropAreaId, fileListId, previewId) {
       fileList.scrollTo({ top: fileList.scrollHeight });
     }
 
-  
-  //드래그된 파일로 대체해주기 
+  //드래그된 파일로 대체해주기
+    var delete_target = document.getElementById(deleteFlag).value
+    delete_target = 'False';
     var $file = document.getElementById(fileListId);
     $file.files = files
     renderFile(files)
@@ -73,11 +74,11 @@ function DropFile(dropAreaId, fileListId, previewId) {
   const dropAreaList = ['drop-file-morning','drop-file-lunch','drop-file-dinner','drop-file-snack'];
   const fileList = ['morning_diet','lunch_diet','dinner_diet','snack_diet'];
   const previewList = ['morining-pre','lunch-pre','dinner-pre','snack-pre'];
+  const deleteFlag = ['morning_delete_flag','lunch_delete_flag','dinner_delete_flag','snack_delete_flag'];
 
   for (let i=0; i<dropAreaList.length; i++){
-      var dropFile = new DropFile(dropAreaList[i], fileList[i], previewList[i]);
+      var dropFile = new DropFile(dropAreaList[i], fileList[i], previewList[i], deleteFlag[i]);
   }
-
 
   function inputRenderFile(id, files){
     var target = null;
@@ -85,15 +86,19 @@ function DropFile(dropAreaId, fileListId, previewId) {
 
     if (id == 'morning_diet'){
       target = document.getElementById(previewList[0]);
+      document.getElementById(deleteFlag[0]).value = 'False'
 
     }else if(id == 'lunch_diet'){
       target = document.getElementById(previewList[1]);
+      document.getElementById(deleteFlag[1]).value = 'False'
 
     }else if(id == 'dinner_diet'){
       target = document.getElementById(previewList[2]);
+      document.getElementById(deleteFlag[2]).value = 'False'
 
     }else{
       target = document.getElementById(previewList[3]);
+      document.getElementById(deleteFlag[3]).value = 'False'
     }
     deleteChilds(target);
     reader.addEventListener('load', () => {
@@ -112,18 +117,22 @@ function DropFile(dropAreaId, fileListId, previewId) {
     var $file = null;
 
     if (id == 'delete_morning_diet'){
+      document.getElementById(deleteFlag[0]).value = 'True';
       target = document.getElementById(previewList[0]);
       $file = document.getElementById(fileList[0]);
 
     }else if(id == 'delete_lunch_diet'){
+      document.getElementById(deleteFlag[1]).value = 'True';
       target = document.getElementById(previewList[1]);
       $file = document.getElementById(fileList[1]);
 
     }else if(id == 'delete_dinner_diet'){
+      document.getElementById(deleteFlag[2]).value = 'True';
       target = document.getElementById(previewList[2]);
       $file = document.getElementById(fileList[2]);
 
     }else{ // snack
+      document.getElementById(deleteFlag[3]).value = 'True';
       target = document.getElementById(previewList[3]);
       $file = document.getElementById(fileList[3]);
     }
@@ -153,5 +162,6 @@ function DropFile(dropAreaId, fileListId, previewId) {
       return false;
     }
   }
+
 
 

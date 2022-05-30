@@ -6,7 +6,7 @@ from django.http import HttpRequest, HttpResponse
 from django.shortcuts import render, redirect 
 from django.urls import reverse_lazy
 from dietapp.forms import DietImageUploadForm, DailyImageUploadForm
-from dietapp.query import get_nutrition_charts, get_similar_diet, get_date_fommater
+from dietapp.query import get_nutrition_charts, get_similar_diet, get_date_fommater, check_delete_flag, check_all_delete_flag
 from dietapp.message import MessageProperty
 from dietapp.models import DailyDietImage
 from profileapp.models import Profile
@@ -52,6 +52,7 @@ class DailyDietView(LoginRequiredMixin, View):
                 daily.fill_values(request.user)
                 target_date = form.cleaned_data['target_date']
                 date_list = {'year': target_date.year, 'month': target_date.month, 'day': target_date.day, 'target_date': target_date}
+
                 context = {'form':form, 'daily':daily, 'date_list': date_list}
                 messages.info(request, MessageProperty.DAILY_CREATE_SUCCESS)
                 return render(request, 'dietapp/daily/detail.html', context)
@@ -79,31 +80,45 @@ class DailyDietView(LoginRequiredMixin, View):
         print('update_date=',target_date)
 
         try :
-            dailyDietImage = DailyDietImage.objects.get(uploader=request.user, target_date=target_date)
+            daily = DailyDietImage.objects.get(uploader=request.user, target_date=target_date)
         except :
             messages.info(request, MessageProperty.DAILY_UPDATE_FAIL)
             return redirect(DailyDietView.daily_main_url)
 
-        context = {'daily': dailyDietImage, 'date_list':date_list}
+        context = {'daily': daily, 'date_list':date_list}
 
         if request.method == 'POST':
-            form = DailyImageUploadForm(request.POST, request.FILES,instance=dailyDietImage)
+            form = DailyImageUploadForm(request.POST, request.FILES,instance=daily)
+            print(form)
             if form.is_valid():
                 form.save(uploader=request.user)
                 messages.info(request, MessageProperty.DAILY_UPDATE_SUCCESS)
-                render(request,'dietapp/daily/detail.html', context);   
+                check_delete_flag(request.POST,daily)
+                daily.save()
 
-        form = DailyImageUploadForm(instance=dailyDietImage)
+                try :
+                    is_deleted_all = DailyDietImage.objects.get(uploader=request.user, target_date=target_date)
+                except :
+                    messages.info(request, MessageProperty.DAILY_UPDATE_FAIL) 
+                    return redirect(DailyDietView.daily_main_url)  
+
+                 # 식단이 다 지워지면 해당 record 삭제 
+                if check_all_delete_flag(is_deleted_all) :
+                    print('true')
+                    is_deleted_all.delete() 
+                    messages.info(request, MessageProperty.DAILY_UPDATE_SUCCESS) 
+                    return redirect(DailyDietView.daily_main_url)  
+                
+        form = DailyImageUploadForm(instance=daily)
         return render(request,'dietapp/daily/update.html', context)       
 
     def delete(request):
         target_date  = request.GET.get('target_date')
         try :
-            dailyDietImage = DailyDietImage.objects.get(uploader=request.user, target_date=target_date)
+            delete_target_record = DailyDietImage.objects.get(uploader=request.user, target_date=target_date)
         except :
             messages.info(request, MessageProperty.DAILY_DELETE_FAIL)
             return redirect(DailyDietView.daily_main_url)
-        dailyDietImage.delete() 
+        delete_target_record.delete() 
         messages.info(request, MessageProperty.DAILY_DELETE_SUCCESS)
         return redirect(DailyDietView.daily_main_url)
-

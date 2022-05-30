@@ -1,0 +1,244 @@
+
+
+{% load static %} 
+
+
+{% block content %}
+
+
+<!DOCTYPE HTML>
+<!--
+	Twenty by HTML5 UP
+	html5up.net | @ajlkn
+	Free for personal and commercial use under the CCA 3.0 license (html5up.net/license)
+-->
+<html>
+	<head>
+		<title>Dinut</title>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+		<link rel="stylesheet" href="{% static 'css/main2.css' %}" />
+		<noscript><link rel="stylesheet" href="{% static 'css/noscript.css' %}" /></noscript>
+		<link rel="preconnect" href="https://fonts.googleapis.com">
+		<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+		<link href="https://fonts.googleapis.com/css2?family=Lobster&display=swap" rel="stylesheet">
+	</head>
+	<body class="index is-preload">
+		<div id="page-wrapper">
+
+			<!-- Header -->
+				<header id="header" class="alt">
+					<h1 id="logo"><a href="index.html">Dinut <span>건강한끼</span></a></h1>
+					<nav id="nav">
+						<ul>
+							<li class="current"><a href="index.html">HOME</a></li>
+							<li class="current"><a href="index.html">식단분석</a></li>
+							<li class="current"><a href="index.html">식단관리</a></li>
+							<li class="current"><a href="index.html">LOGIN</a></li>
+							<li class="submenu">
+							</li>
+							<li><a href="#" class="button primary">Sign Up</a></li>
+						</ul>
+					</nav>
+				</header>
+
+			<!-- Banner -->
+				<section id="banner">
+
+					<!--
+						".inner" is set up as an inline-block so it automatically expands
+						in both directions to fit whatever's inside it. This means it won't
+						automatically wrap lines, so be sure to use line breaks where
+						appropriate (<br />).
+					-->
+					<div class="inner">
+
+						<header>
+							<h2 class = "logo1">Dinut</h2>
+						</header>
+						<p>영양지식이 부족해 수기식 식단 관리에<br>어려움을 겪고 계신가요?
+						<br />
+						DINUT과 함께하세요🍽
+						<footer>
+							<ul class="buttons stacked">
+								<li><a href="#main" class="button fit scrolly">식단 분석</a></li>
+							</ul>
+						</footer>
+
+					</div>
+
+				</section>
+
+			<!-- Main -->
+				<article id="main">
+
+					<header class="special container">
+						<span class="icon solid fa-chart-bar"></span>
+						<h2> <strong>Inception V3</strong>기반 딥러닝 모델을 활용한 서비스
+						<br />
+						이제 이미지 인식을 통한 식단관리를 해보세요😀</h2>
+						<p>🌿식단 이미지를 업로드하면 이미지에 포함된 음식명과 영양성분을 표시
+						<br />
+						🌿자체적인 룰에 기반해 일일 섭취 칼로리와 영양 불균형 정도를 추가로 표시
+						<br />
+						<strong>🌿나의 식단을 캘린더에 표시</p>
+
+					</header>
+
+					<!-- One -->
+						<section class="wrapper style2 container special-alt">
+							<div class="row gtr-50">
+								<div class="col-8 col-12-narrower">
+
+									<header>
+										<img src="{% static 'images/result1.png' %}" alt="" />
+									</header>
+
+									<p>오늘 아침, 점심, 저녁에 무엇을 먹었는지 기억이 안 나신다고요? <br>사진만 찍어두세요🍴<br>사진을 올리면 디넛이 무슨 음식을 먹었는지 분석해드립니다.</p>
+									<footer>
+										<ul class="buttons">
+											<li><a href="#" class="button">식단분석</a></li>
+										</ul>
+									</footer>
+
+								</div>
+								<div class="col-4 col-12-narrower imp-narrower">
+
+									<ul class="featured-icons">
+										<li><span class="icon fa-clock"><span class="label">Feature 1</span></span></li>
+										<li><span class="icon solid fa-volume-up"><span class="label">Feature 2</span></span></li>
+										<li><span class="icon solid fa-laptop"><span class="label">Feature 3</span></span></li>
+										<li><span class="icon solid fa-inbox"><span class="label">Feature 4</span></span></li>
+										<li><span class="icon solid fa-lock"><span class="label">Feature 5</span></span></li>
+										<li><span class="icon solid fa-cog"><span class="label">Feature 6</span></span></li>
+									</ul>
+
+								</div>
+							</div>
+						</section>
+
+					<!-- Two -->
+						<section class="wrapper style1 container special">
+							<div class="row">
+								<div class="col-4 col-12-narrower">
+
+									<section>
+										<span class="icon solid featured fa-check"></span>
+										<header>
+											<h3>식단부터 식습관 관리까지</h3>
+										</header>
+										<p>내가 무슨 음식을 먹었는지, 앞으로 어떠한 음식을 먹으면 좋을지 디넛이 알려드립니다.</p>
+									</section>
+
+								</div>
+								<div class="col-4 col-12-narrower">
+
+									<section>
+										<span class="icon solid featured fa-check"></span>
+										<header>
+											<h3>효과적인 다이어트</h3>
+										</header>
+										<p>다이어트의 꽃은 식단관리! 캘린더를 통해 식단 기록을 할 수 있습니다. 하루하루 무슨 음식을 먹었는지 기록하며 효과적인 다이어트를 맛보게 해드립니다.</p>
+									</section>
+
+								</div>
+								<div class="col-4 col-12-narrower">
+
+									<section>
+										<span class="icon solid featured fa-check"></span>
+										<header>
+											<h3>영양 불균형 해소</h3>
+										</header>
+										<p>식단 이미지를 업로드하면 이미지에 포함된 음식명과 영양성분을 표시해줍니다. 이를 통해 영양성분 섭취를 한 눈에 파악할 수 있습니다.</p>
+									</section>
+
+								</div>
+							</div>
+						</section>
+
+					<!-- Three -->
+						<section class="wrapper style3 container special">
+
+							<header class="major">
+								<h2><strong>Dinut</strong>의 주요 기능</h2>
+							</header>
+							
+
+							<div class="row">
+								<img src="{% static '.' %}" alt="" /
+								<div class="col-6 col-12-narrower">
+
+									<section>
+										<a href="#" class="image featured"><img src="{% static 'images/result2.png' %}" alt="" /></a>
+										<header>
+											<h3>Fusion Charts를 활용한 <strong>영양 성분 분석</strong></h3>
+										</header>
+										<p>Fusion Charts를 통해 주요 3대 영양소인 탄수화물, 단백질, 지방 섭취량을 한 눈에 파악할 수 있어요</p>
+									</section>
+
+								</div>
+								<div class="col-6 col-12-narrower">
+
+									<section>
+										<a href="#" class="image featured"><img src="{% static 'images/result3.png' %}" alt="" /></a>
+										<header>
+											<h3><strong>유사 식단 추천</strong></h3>
+										</header>
+										<p>영양 성분 분석을 토대로 식단을 추천해드립니다.<br>디넛과 함께 영양소 골고루 섭취해서 건강한 식습관 유지해봅시다😉</p>
+									</section>
+
+								</div>
+							</div>
+
+
+
+						</section>
+
+				</article>
+
+			<!-- CTA -->
+				<section id="cta">
+
+					<header>
+						<h2><strong>Dinut</strong>과 함께할 준비 되셨나요?</h2>
+						<p>디넛과 함께 식단 불균형을 해소하세요</p>
+					</header>
+					<footer>
+						<ul class="buttons">
+							<li><a href="#" class="button">공지사항</a></li>
+							<li><a href="#" class="button">제휴문의</a></li>
+							<li><a href="#" class="button">서비스 소개</a></li>
+						</ul>
+					</footer>
+
+				</section>
+
+			<!-- Footer -->
+				<footer id="footer">
+
+					<ul class="icons">
+						<li><a href="https://github.com/minyeamer/dinut" class="icon brands circle fa-github"><span class="label">Github</span></a></li>
+						<li><a href="https://www.notion.so/minyeamer/Dinut" class="icon brands circle fa-dribbble"><span class="label">Dribbble</span></a></li>
+					</ul>
+
+					<ul class="copyright">
+						<li>&copy; Dinut</li>
+					</ul>
+
+				</footer>
+
+		</div>
+
+		<!-- Scripts -->
+			<script src="{% static 'js/jquery.min.js' %}"></script>
+			<script src="{% static 'js/jquery.dropotron.min.js' %}"></script>
+			<script src="{% static 'js/jquery.scrolly.min.js' %}"></script>
+			<script src="{% static 'js/jquery.scrollex.min.js' %}"></script>
+			<script src="{% static 'js/browser.min.js' %}"></script>
+			<script src="{% static 'js/breakpoints.min.js' %}"></script>
+			<script src="{% static 'js/util.js' %}"></script>
+			<script src="{% static 'js/main.js' %}"></script>
+
+	</body>
+</html>
+{% endblock %}

@@ -92,3 +92,6 @@ class DailyDietView(LoginRequiredMixin, View):
             return redirect(DailyDietView.daily_main_url)
         daily_image.delete() 
         return redirect(DailyDietView.daily_main_url)
+
+def home(request):
+    return render(request, 'dietapp/diet/home.html')

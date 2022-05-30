@@ -17,12 +17,12 @@ from django.contrib import admin
 from django.urls import path, include
 from django.conf import settings 
 from django.conf.urls.static import static
-from dietapp.views import DietUploadView
+from dietapp.views import DietUploadView, home
 
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('', DietUploadView.as_view(), name='home'), # temporary assigned
+    path('', home, name='home'), # temporary assigned
     path('account/', include('accountapp.urls')),
     path('profile/', include('profileapp.urls')),
     path('diet/', include('dietapp.urls')),

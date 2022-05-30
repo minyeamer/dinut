@@ -18,7 +18,6 @@ def detect_food(image_url: str, bbox: Optional[bool] = True) -> List[str]:
     if len(bowls) > 0:
         for bowl in bowls.iterrows():
             xmin, ymin, xmax, ymax = list(map(int,(bowl[1].tolist()[:4])))
-            print(ymin, ymax, xmin, xmax)
             result = predict_food(diet_image[ymin:ymax, xmin:xmax])
             if result:
                 bbox_list.append(list(map(int,[xmin,ymin,xmax,ymax]))+[result])

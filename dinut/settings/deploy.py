@@ -2,10 +2,9 @@ from .base import *
 
 
 def read_secret(secret_name):
-    file = open('/run/secrets/' + secret_name)
-    secret = file.read()
-    secret = secret.rstrip().lstrip()
-    file.close()
+    with open('/run/secrets/'+secret_name, 'r') as docker_secret:
+        secret = docker_secret.read().rstrip().lstrip()
+
     return secret
 
 

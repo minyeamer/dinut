@@ -1,5 +1,5 @@
 {% load static %}     
-<!--TODO JS단에서 for문 써서 랜더링하기-->
+     <!--TODO JS단에서 for문 써서 랜더링하기-->
 <head>
 </head>
 <div class="container">
@@ -16,6 +16,11 @@
     <hr>
     <form id='daily_form' method="POST" enctype="multipart/form-data">
     <input type="hidden" id="target_date" name="target_date" value="{{date_list.target_date}}">
+    <!-- 안 쓰지만, JS를 한 파일로 공유하고 있어서 정의해야 에러가 안남-->
+    <input type="hidden" id="morning_delete_flag" name='morning_delete_flag'value="False">
+    <input type="hidden" id="lunch_delete_flag" name='lunch_delete_flag' value="False">
+    <input type="hidden" id="dinner_delete_flag" name='dinner_delete_flag' value="False">
+    <input type="hidden" id="snack_delete_flag" name='snack_delete_flag' value="False">
         {% csrf_token %} 
     <div class="diet-event">
         <div class="upload-box">
@@ -63,10 +68,17 @@
             <button class="invisible delete_snack_diet"  id="delete_snack_diet" onclick="deleteImage(this.id)" type="button"></button>
         </div>
         <div class="diet_set">
-            <button class="diet_btn" onclick="validationCheck()">submit</button>
+            <button class="diet_btn" onclick='validationCheck()'>submit</button>
         </div>
     </from>
 </div>
 </div>
-
-<script src="{% static 'dietapp/js/multiple_upload.js' %}"></script>
+<script src="{% static 'js/multiple_upload.js' %}"></script>
+{% if messages %}
+{% for message in messages %}
+<script>
+    var message = '{{ message.message }}';
+    alert(message);
+</script>
+{% endfor %}
+{% endif %}

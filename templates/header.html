@@ -1,33 +1,44 @@
-<div class="header">
 
-    <div>
-        <a href="{% url 'home' %}">
-            <h1 class="logo">Dinut</h1>
-        </a>
-    </div>
-    <div class="navbar">
-        <a href="{% url 'dietapp:upload' %}" class="header_nav">
-            <span>식단 분석</span>
-        </a>
-        <a href="{% url 'dietapp:daily' %}" class="header_nav">
-            <span>식단 관리</span>
-        </a>
-        </a>
-        {% if not user.is_authenticated %}
-        <a href="{% url 'accountapp:login' %}" class="header_nav">
-            <span>Login</span>
-        </a>
-        <a href="{% url 'accountapp:create' %}?next={{ request.path }}" class="header_nav">
-            <span>SignUp</span>
-        </a>
-        {% else %}
-        <a href="{% url 'accountapp:detail' pk=user.pk %}" class="header_nav">
-            <span>MyPage</span>
-        </a>
-        <a href="{% url 'accountapp:logout' %}" class="header_nav">
-            <span>Logout</span>
-        </a>
-        {% endif %}
-    </div>
 
-</div>
+
+<!DOCTYPE HTML>
+<!--
+	Twenty by HTML5 UP
+	html5up.net | @ajlkn
+	Free for personal and commercial use under the CCA 3.0 license (html5up.net/license)
+-->
+<html>
+	<head>
+		<title>Dinut</title>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+		<link rel="stylesheet" href="assets/css/main.css" />
+		<noscript><link rel="stylesheet" href="assets/css/noscript.css" /></noscript>
+	</head>
+	<body class="no-sidebar is-preload">
+		<div id="page-wrapper">
+
+			<!-- Header -->
+				<header id="header">
+					<h1 id="logo"><a href="{% url 'home' %}">Dinut <span>건강한끼</span></a></h1>
+					<nav id="nav">
+                            <ul>
+                                <li class="current"><a href="{% url 'home' %}">HOME</a></li>
+                                <li class="current"><a href="{% url 'dietapp:upload' %}">식단분석</a></li>
+                                <li class="current"><a href="{% url 'dietapp:daily' %}">식단관리</a></li>
+                                {% if not user.is_authenticated %}
+                                <li class="current"><a href="{% url 'accountapp:login' %}">LOGIN</a></li>
+                                <li class="submenu">
+                                </li>
+                            </ul>
+                            
+							<li><a href="{% url 'accountapp:create' %}?next={{ request.path }}" class="button primary">Sign Up</a></li>
+                            {% else %}
+                            <li class="current"><a href="{% url 'accountapp:detail' pk=user.pk %}">MY PAGE</a></li>
+							<li><a href="{% url 'accountapp:logout' %}" class="button primary">Sign Up</a></li>
+                            {% endif %}
+                            
+
+						</ul>
+					</nav>
+				</header>

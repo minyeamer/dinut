@@ -1,3 +1,4 @@
+{% load static %}     
 <div id="container">
     <div id="resultArea">
         <h2 class="title">Result</h2>
@@ -40,19 +41,45 @@
             <button class="mt-2 btn btn-success" type="button">이전으로</button>
         </a>
         <button class="mt-2 btn btn-primary" type="button" onclick="updateView()">수정하기</button>
-        <input type="hidden" id="target_date" name="target_date" value="{{date_list.target_date}}">
+        <input id="target_date" name="target_date" value="{{date_list.target_date}}" hidden>
         <button class="mt-2 btn btn-danger" id="delete_view" type="button" onclick="deleteView()">전체 삭제</button>
         </div>
     </div>
 </div>
-
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/moment.min.js"></script>
+<script src="{% static 'js/result.js' %}"></script>
 <script>
+    const year ='{{date_list.year}}' ;
+    const month ='{{date_list.month}}';
+    const day = '{{date_list.day}}' ;
+    const key = getSelectedDate(year,month,day);
+
+    function getSelectedDate(year,month,day){
+         var regex = /[^0-9]/g;
+         var day = day.replace(regex, "");
+         if (day < 10 && day.length < 2){
+             day = "0" + day;
+         }
+         if (month < 10 && month.length < 2){
+             month = "0" + month;
+         }
+         return year + "-" + month + "-" + day;
+     }
+
     function updateView(){
-        pk = document.getElementById('target_date').value;
-        window.location.href = '/diet/daily/update?target_date='+ pk;
+      window.location.href = '/diet/daily/update?target_date='+ key;
     }
+
     function deleteView(){
-        pk = document.getElementById('target_date').value;
-        window.location.href = '/diet/daily/delete?target_date='+ pk;
+      window.location.href = '/diet/daily/delete?target_date='+ key;
     }
+
 </script>
+{% if messages %}
+{% for message in messages %}
+<script>
+    var message = '{{ message.message }}';
+    alert(message);
+</script>
+{% endfor %}
+{% endif %}

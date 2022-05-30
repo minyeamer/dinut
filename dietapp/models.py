@@ -3,7 +3,6 @@ from django.db import models
 from django.contrib.auth.models import User
 from django.core.validators import MinValueValidator
 
-
 class AbstractNutrition(models.Model):
     energy = models.FloatField('에너지(kcal)', default=0.0, validators=[MinValueValidator(0.0)])
     carb = models.FloatField('탄수화물(g)', default=0.0, validators=[MinValueValidator(0.0)])
@@ -21,17 +20,17 @@ class AbstractNutrition(models.Model):
         abstract = True
 
     def fill_nutritions(self, nutrition_info: Dict[str, float]):
-        self.energy = nutrition_info['energy']
-        self.carb = nutrition_info['carb']
-        self.protein = nutrition_info['protein']
-        self.fat = nutrition_info['fat']
-        self.sugar = nutrition_info['sugar']
-        self.fiber = nutrition_info['fiber']
-        self.sodium = nutrition_info['sodium']
-        self.vitamin_a = nutrition_info['vitamin_a']
-        self.riboflavin = nutrition_info['riboflavin']
-        self.calcium = nutrition_info['calcium']
-        self.iron = nutrition_info['iron']
+        self.energy = round(nutrition_info['energy'],2)
+        self.carb = round(nutrition_info['carb'],2)
+        self.protein = round(nutrition_info['protein'],2)
+        self.fat = round(nutrition_info['fat'],2)
+        self.sugar = round(nutrition_info['sugar'],2)
+        self.fiber = round(nutrition_info['fiber'],2)
+        self.sodium = round(nutrition_info['sodium'],2)
+        self.vitamin_a = round(nutrition_info['vitamin_a'],2)
+        self.riboflavin = round(nutrition_info['riboflavin'],2)
+        self.calcium = round(nutrition_info['calcium'],2)
+        self.iron = round(nutrition_info['iron'],2)
 
 
 class AbstractUpload(models.Model):
@@ -57,6 +56,7 @@ class Nutrition(AbstractNutrition):
 
 
 class Diet(AbstractNutrition):
+    diet_name = models.CharField('식단명', max_length=255, unique=True)
     food_list = models.TextField('식품 목록')
 
     class Meta:
@@ -64,7 +64,7 @@ class Diet(AbstractNutrition):
         verbose_name_plural = '식단'
 
     def __str__(self):
-        return f'{self.food_list} - {self.energy} kcal'
+        return f'{self.diet_name} ({self.food_list}) - {self.energy} kcal'
 
 
 class DietImage(AbstractNutrition, AbstractUpload):
@@ -92,10 +92,11 @@ class DietImage(AbstractNutrition, AbstractUpload):
 
 class DailyDietImage(AbstractNutrition, AbstractUpload):
     uploader = models.ForeignKey(User, on_delete=models.CASCADE, related_name='daily_diet_image')
-    morning_diet = models.ImageField('아침 식단', upload_to='images/daily/morning/%Y/%m/%d', null=True)
-    lunch_diet = models.ImageField('점심 식단', upload_to='images/daily/lunch/%Y/%m/%d', null=True)
-    dinner_diet = models.ImageField('저녁 식단', upload_to='images/daily/dinner/%Y/%m/%d', null=True)
-    snack_diet = models.ImageField('간식 식단', upload_to='images/daily/snack/%Y/%m/%d', null=True)
+    morning_diet = models.ImageField('아침 식단', upload_to='images/daily/morning/%Y/%m/%d', null=True, blank=True) 
+    lunch_diet = models.ImageField('점심 식단', upload_to='images/daily/lunch/%Y/%m/%d', null=True, blank=True)
+    dinner_diet = models.ImageField('저녁 식단', upload_to='images/daily/dinner/%Y/%m/%d', null=True, blank=True)
+    snack_diet = models.ImageField('간식 식단', upload_to='images/daily/snack/%Y/%m/%d', null=True, blank=True)
+    target_date = models.DateField('일자', auto_now=False, null=True) 
 
     class Meta:
         db_table = 'daily_diet_image'

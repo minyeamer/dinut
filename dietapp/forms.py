@@ -11,4 +11,12 @@ class DietImageUploadForm(forms.ModelForm):
 class DailyImageUploadForm(forms.ModelForm):
     class Meta: 
         model = DailyDietImage 
-        fields = ['morning_diet','lunch_diet','dinner_diet','snack_diet']
+        fields = ['morning_diet','lunch_diet','dinner_diet','snack_diet','target_date']
+
+    def save(self, **kwargs):
+        post = super().save(commit=False)
+        post.uploader = kwargs.get('uploader')
+        post.save()
+ 
+        return post
+

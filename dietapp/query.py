@@ -6,6 +6,7 @@ from dietapp.detect import detect_food
 from dietapp.fusioncharts import FusionCharts
 from collections import OrderedDict, defaultdict
 import pandas as pd
+from datetime import datetime
 
 NUTRITIONS = ['energy','carb','protein','fat','sugar','fiber',
             'sodium','vitamin_a','riboflavin','calcium','iron']
@@ -28,7 +29,7 @@ def sum_nutritions(image_urls: List[str]) -> DefaultDict[str, float]:
     calc_result = defaultdict(int)
 
     for image_url in image_urls:
-        detect_result = analyze_diet(settings.MEDIA_ROOT_URL + image_url)
+        detect_result = analyze_diet(image_url)
 
         for nutrition in NUTRITIONS:
             calc_result[nutrition] += detect_result[nutrition]
@@ -87,3 +88,35 @@ def get_similar_diet(id: int) -> str:
                 'carb':'탄수화물(g)', 'protein':'프로틴(g)', 'fat':'지방(g)'}
     similar_df = pd.DataFrame(similar_list).rename(kr_dict, axis=1)
     return similar_df.set_index('식품 목록').to_html(classes='table table-striped text-center', justify='center')
+
+def check_delete_flag(post, daily):
+
+    #slicing hash X
+    #delete_flag_list = {post['morning_delete_flag'], post['lunch_delete_flag'], ['dinner_delete_flag'], post['dinner_delete_flag']}
+    #daily_diet_list = [daily.morning_diet, daily.lunch_diet, daily.dinner_diet, daily.snack_diet]
+
+    if post['morning_delete_flag'] == 'True':
+        daily.morning_diet = ''
+    if post['lunch_delete_flag'] == 'True':
+        daily.lunch_diet = ''
+    if post['dinner_delete_flag'] == 'True':
+        daily.dinner_diet = ''
+    if post['snack_delete_flag'] == 'True':
+        daily.snack_diet = ''
+
+def check_all_delete_flag(daily):
+    delete_all_flag = True
+
+    if daily.morning_diet :
+        delete_all_flag = False
+    if daily.lunch_diet :
+        delete_all_flag = False
+    if daily.dinner_diet :
+        delete_all_flag = False
+    if daily.snack_diet :
+        delete_all_flag = False
+
+    return delete_all_flag
+
+def get_date_fommater(target_date):
+    return {'year': target_date[:4], 'month':target_date[5:7], 'day':target_date[8:10],'target_date':target_date}

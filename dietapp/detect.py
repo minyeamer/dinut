@@ -4,7 +4,6 @@ from PIL import ImageFont, ImageDraw, Image
 import cv2
 import numpy as np
 import pandas as pd
-import tensorflow as tf
 
 STATIC_DIR = settings.STATIC_ROOT_URL + settings.STATIC_URL
 FONT = ImageFont.truetype(STATIC_DIR + 'fonts/NanumSquareB.otf', size=16)
@@ -19,8 +18,9 @@ def detect_food(image_url: str, bbox: Optional[bool] = True) -> List[str]:
     if len(bowls) > 0:
         for bowl in bowls.iterrows():
             xmin, ymin, xmax, ymax = list(map(int,(bowl[1].tolist()[:4])))
-            result = predict_food(diet_image[xmin:xmax, ymin:ymax])
-            bbox_list.append(list(map(int,[xmin,ymin,xmax,ymax]))+[result])
+            result = predict_food(diet_image[ymin:ymax, xmin:xmax])
+            if result:
+                bbox_list.append(list(map(int,[xmin,ymin,xmax,ymax]))+[result])
             food_list.append(result)
         if bbox:
             draw_bbox(image_url, bbox_list)
@@ -40,16 +40,20 @@ def detect_bowls(diet_image: np.ndarray) -> pd.DataFrame:
     return boxes[boxes.name == 'bowl']
 
 
-def predict_food(diet_image: np.ndarray) -> str:
-    import random # InceptionV3 모델 완성 전 디버깅용 코드
-    debug = ['밥','닭가슴살','가츠동','감자튀김','국수'] # InceptionV3 모델 완성 전 디버깅용 코드
+def predict_food(food_image: np.ndarray) -> str:
+    model = settings.DL_MODELS['InceptionV3']
 
-    # model = settings.DL_MODELS['InceptionV3']
-    # diet_image = tf.expand_dims(cv2.resize(diet_image, dsize=(299, 299)), axis=0)
-    # predict = model.predict(diet_image)
-    result = random.choice(debug) # InceptionV3 모델 완성 전 디버깅용 코드
+    if model is not None:
+        food_image = cv2.resize(food_image, (299,299))
+        food_image = np.expand_dims(food_image, axis=0)
+        food_preds = model.predict(food_image)
+        label_index = np.argmax(food_preds)
+        label = settings.LABEL[str(label_index)]
+    else:
+        import random
+        label = random.choice(list(settings.LABEL.values()))
 
-    return result
+    return label
 
 
 def draw_bbox(image_url: str, bbox_list: List[List[float]]):

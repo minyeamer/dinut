@@ -1,15 +1,11 @@
 @import url("fontawesome-all.min.css");
 @import url("https://fonts.googleapis.com/css?family=Lato:300,400,900");
-@import url('https://fonts.googleapis.com/css2?family=Lobster&display=swap');
+
 /*
 	Twenty by HTML5 UP
 	html5up.net | @ajlkn
 	Free for personal and commercial use under the CCA 3.0 license (html5up.net/license)
 */
-
-.logo1 {
-    font-family: 'Lobster', cursive;
-}
 
 html, body, div, span, applet, object,
 iframe, h1, h2, h3, h4, h5, h6, p, blockquote,
@@ -103,7 +99,7 @@ input, select, textarea {
 
 	body, input, select, textarea {
 		color: #7c8081;
-		font-family: 'Lobster', cursive;
+		font-family: 'Lato', sans-serif;
 		font-size: 15pt;
 		font-weight: 300;
 		letter-spacing: 0.025em;
@@ -1856,7 +1852,7 @@ input, select, textarea {
 	}
 
 		.image:before {
-			background: url(".");
+			background: url("images/overlay.png");
 			content: '';
 			height: 100%;
 			left: 0;

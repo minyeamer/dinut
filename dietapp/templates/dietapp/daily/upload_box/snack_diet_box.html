@@ -1,0 +1,10 @@
+<div class="upload-box">
+    <p class="px-5 message">Dissert Image</p>
+    <div id="drop-file-snack" class="drag-file">
+        <div id="snack-pre"></div>
+    </div>
+    <label class="file-label" for="snack_diet">Choose</label>
+    <input class="snack-file" id="snack_diet" name="snack_diet" type="file" accept="image/png, image/jpeg, image/gif" onchange='inputRenderFile(this.id,this.files)' required="false" hidden>
+    <label class="delete-label" for="delete_snack_diet">delete</label>
+    <button class="invisible delete_snack_diet"  id="delete_snack_diet" onclick="deleteImage(this.id)" type="button"></button>
+</div>

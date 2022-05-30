@@ -1,10 +1,12 @@
+from distutils.command.upload import upload
+import profile
 from django.views import View
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.http import HttpRequest, HttpResponse
-from django.shortcuts import render, redirect, get_object_or_404 
+from django.shortcuts import render, redirect 
 from django.urls import reverse_lazy
 from dietapp.forms import DietImageUploadForm, DailyImageUploadForm
-from dietapp.query import get_nutrition_charts, get_similar_diet
+from dietapp.query import get_nutrition_charts, get_similar_diet, get_date_fommater, string_to_date
 from dietapp.models import DailyDietImage
 from profileapp.models import Profile
 
@@ -26,59 +28,71 @@ class DietUploadView(View):
 
 class DailyDietView(LoginRequiredMixin, View):
     login_url = reverse_lazy('accountapp:login')
+    profile_url = reverse_lazy('accountapp:detail')
+    daily_main_url = reverse_lazy('dietapp:daily')
 
-    def execute_profile_validation(request) :
-        try:
-            profile = Profile.objects.get(user=request.user)
-        except :
-            return redirect('accountapp:detail',pk=request.user.id)
-        finally :
-            return profile
-
-
-    def post(self, request: HttpRequest) -> HttpResponse:
-        profile = DailyDietView.execute_profile_validation(request)
-
-        form = DailyImageUploadForm(request.POST, request.FILES)
-        print(request.FILES)
-        print('='*30)
-
-        if form.is_valid():
-            daily = form.save(uploader=request.user)
-            daily.fill_values(request.user)
-            context = {'form':form, 'daily':daily, 'profile':profile}
-
-            return render(request, 'dietapp/daily/main.html', context)
-
-    def get(self, request: HttpRequest) -> HttpResponse:
-        profile = DailyDietView.execute_profile_validation(request)
-
-        return render(request, 'dietapp/daily/main.html', {'profile':profile})
+    def index(request):
+         cur_user = request.user
+         if not cur_user.is_authenticated:
+            return redirect(DailyDietView.login_url)
+         try:
+             profile = Profile.objects.get(user=request.user)
+         except :
+            return redirect(DailyDietView.profile_url, pk=request.user.id)
+         
+         return render(request, 'dietapp/daily/main.html',{'profile': profile})
     
-    def update(request,pk):
-        profile = DailyDietView.execute_profile_validation(request)
+    def detail(request):
+        if request.method == 'POST': 
+            form = DailyImageUploadForm(request.POST, request.FILES)
             
-        try:
-            dailyDietImage = DailyDietImage.objects.get(pk)
-        except :
-            return redirect('diteapp:daily:main')
-            
-        if request.method == 'POST':
-            form = DailyImageUploadForm(request.POST,instance=dailyDietImage) 
             if form.is_valid():
-                form.save()
-                context = {'form':form, 'daily':dailyDietImage, 'profile':profile}
-                return render(request, 'dietapp/daily/main.html', context)
-        else:
-            form = DailyImageUploadForm(instance=dailyDietImage)
-        return render(request,'update.html',{'form':form})
+                daily = form.save(uploader=request.user)
+                daily.fill_values(request.user)
+                target_date = form.cleaned_data['target_date']
+                date_list = {'year': target_date.year, 'month': target_date.month, 'day': target_date.day, 'target_date': target_date}
+                context = {'form':form, 'daily':daily, 'date_list': date_list}
 
-    def delete(request,pk):
-        dailyDietImage = DailyDietImage.objects.get(pk=pk)
-        dailyDietImage.delete() 
-        return redirect('diteapp:daily:main')
+                return render(request, 'dietapp/daily/detail.html', context)
+        else :
+                target_date  = request.GET.get('target_date')
+                date_list = get_date_fommater(target_date)
 
+                try :
+                    dailyDietImage = DailyDietImage.objects.get(uploader=request.user, target_date=target_date)
+                except :
+                    return render(request, 'dietapp/daily/detail.html',{'date_list':date_list })
 
+                context = {'daily': dailyDietImage, 'date_list': date_list}
+                return render(request, 'dietapp/daily/detail.html', context)
     
-        
+
+    def update(request):
+        target_date  = request.GET.get('target_date')
+        date_list = get_date_fommater(target_date)
+        query_date = string_to_date(target_date)
+
+        try :
+            dailyDietImage = DailyDietImage.objects.get(uploader=request.user, target_date=query_date.date())
+        except :
+            return redirect(DailyDietView.daily_main_url)
+
+        if request.method == 'POST':
+            form = DailyImageUploadForm(request.POST, request.FILES,instance=dailyDietImage)
+            if form.is_valid():
+                form.save(uploader=request.user)
+                redirect('dietapp:detail')
+
+        form = DailyImageUploadForm(instance=dailyDietImage)
+        context = {'daily': dailyDietImage, 'date_list':date_list}
+        return render(request,'dietapp/daily/update.html', context)       
+
+    def delete(request):
+        target_date  = request.GET.get('target_date')
+        try :
+            dailyDietImage = DailyDietImage.objects.get(uploader=request.user, target_date=target_date)
+        except :
+            return redirect(DailyDietView.daily_main_url)
+        dailyDietImage.delete() 
+        return redirect(DailyDietView.daily_main_url)
 

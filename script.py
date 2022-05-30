@@ -26,7 +26,6 @@ def execute_nutrition_db():
                 fiber = row[10],
                 sodium = row[11],
             )
-    print(rows)
 
 
 def execute_diet_db():
@@ -50,7 +49,6 @@ def execute_diet_db():
                 iron = row[9],
                 defaults={'diet_name': f'식단 {i}'}
             )
-    print(rows)
 
 
 def main():

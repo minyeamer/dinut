@@ -7,6 +7,7 @@ from django.shortcuts import render, redirect
 from django.urls import reverse_lazy
 from dietapp.forms import DietImageUploadForm, DailyImageUploadForm
 from dietapp.query import get_nutrition_charts, get_similar_diet, get_date_fommater
+from dietapp.message import MessageProperty
 from dietapp.models import DailyDietImage
 from profileapp.models import Profile
 from django.contrib import messages
@@ -52,11 +53,11 @@ class DailyDietView(LoginRequiredMixin, View):
                 target_date = form.cleaned_data['target_date']
                 date_list = {'year': target_date.year, 'month': target_date.month, 'day': target_date.day, 'target_date': target_date}
                 context = {'form':form, 'daily':daily, 'date_list': date_list}
-                messages.info(request, '식단이 정상적으로 등록되었습니다.')
+                messages.info(request, MessageProperty.DAILY_CREATE_SUCCESS)
                 return render(request, 'dietapp/daily/detail.html', context)
 
             else:
-                messages.info(request, '일시적인 서버오류로 식단 등록에 실패하였습니다.')
+                messages.info(request, MessageProperty.DAILY_CREATE_FAIL)
                 return render(request, 'dietapp/daily/detail.html')
 
         else :
@@ -80,17 +81,16 @@ class DailyDietView(LoginRequiredMixin, View):
         try :
             dailyDietImage = DailyDietImage.objects.get(uploader=request.user, target_date=target_date)
         except :
-            messages.info(request, '일시적인 서버 오류로 식단 변경에 실패하였습니다.')
+            messages.info(request, MessageProperty.DAILY_UPDATE_FAIL)
             return redirect(DailyDietView.daily_main_url)
 
         context = {'daily': dailyDietImage, 'date_list':date_list}
 
         if request.method == 'POST':
             form = DailyImageUploadForm(request.POST, request.FILES,instance=dailyDietImage)
-            print("=============",request.FILES)
             if form.is_valid():
                 form.save(uploader=request.user)
-                messages.info(request, '식단이 정상적으로 변경되었습니다.')
+                messages.info(request, MessageProperty.DAILY_UPDATE_SUCCESS)
                 render(request,'dietapp/daily/detail.html', context);   
 
         form = DailyImageUploadForm(instance=dailyDietImage)
@@ -101,9 +101,9 @@ class DailyDietView(LoginRequiredMixin, View):
         try :
             dailyDietImage = DailyDietImage.objects.get(uploader=request.user, target_date=target_date)
         except :
-            messages.info(request, '일시적인 서버 오류로 식단 삭제에 실패하였습니다.')
+            messages.info(request, MessageProperty.DAILY_DELETE_FAIL)
             return redirect(DailyDietView.daily_main_url)
         dailyDietImage.delete() 
-        messages.info(request, '식단이 정상적으로 전부 삭제되었습니다.')
+        messages.info(request, MessageProperty.DAILY_DELETE_SUCCESS)
         return redirect(DailyDietView.daily_main_url)
 

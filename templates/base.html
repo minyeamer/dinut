@@ -4,16 +4,21 @@
 
 {% include 'head.html' %}
 
-<body style="font-family: 'NanumSqaureR';">
-
+<body class="index is-preload" style="font-family: 'NanumSqaureR';">
     {% include 'header.html' %}
 
-    <hr>
+    <br>
+    <br>
+    <br>
+    <div id="page-wrapper" style="padding=15rem;">
 
     {% block content %}
     {% endblock %}
 
-    <hr>
+    </div>
+    <br>
+    <br>
+    <br>
 
     {% include 'footer.html' %}
 

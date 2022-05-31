@@ -28,16 +28,20 @@
 
 			<!-- Header -->
 				<header id="header" class="alt">
-					<h1 id="logo"><a href="index.html">Dinut <span>건강한끼</span></a></h1>
+					<h1 id="logo"><a href="{% url 'home' %}">Dinut <span>건강한끼</span></a></h1>
 					<nav id="nav">
 						<ul>
-							<li class="current"><a href="index.html">HOME</a></li>
-							<li class="current"><a href="index.html">식단분석</a></li>
-							<li class="current"><a href="index.html">식단관리</a></li>
-							<li class="current"><a href="index.html">LOGIN</a></li>
-							<li class="submenu">
-							</li>
-							<li><a href="#" class="button primary">Sign Up</a></li>
+							<li class="current"><a href="{% url 'home' %}">HOME</a></li>
+							<li class="current"><a href="{% url 'dietapp:upload' %}">식단분석</a></li>
+							<li class="current"><a href="{% url 'dietapp:daily' %}">식단관리</a></li>
+							{% if not user.is_authenticated %}
+							<li class="current"><a href="{% url 'accountapp:login' %}">LOGIN</a></li>
+							<li><a href="{% url 'accountapp:create' %}?next={{ request.path }}" class="button primary">Sign Up</a></li>
+							{% else %}
+							<li class="current"><a href="{% url 'accountapp:detail' pk=user.pk %}">MY PAGE</a></li>
+							<li><a href="{% url 'accountapp:logout' %}" class="button primary">LOGOUT</a></li>
+							{% endif %}
+							<li class="submenu"></li>
 						</ul>
 					</nav>
 				</header>

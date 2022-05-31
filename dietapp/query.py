@@ -57,8 +57,8 @@ def get_nutrition_charts(id: str) -> List[str]:
 
     column2D = FusionCharts('column2d','columnChart','600','400','chart-col','json',data_source).render()
     pie2D = FusionCharts('pie2d','pieChart','600','400','chart-pie','json',data_source).render()
-    stackedBar2D = FusionCharts('stackedarea2d','stackedBarChart','600','400','chart-bar','json',data_source).render()
-    return [column2D, pie2D, stackedBar2D]
+    # stackedBar2D = FusionCharts('stackedarea2d','stackedBarChart','600','400','chart-bar','json',data_source).render()
+    return [column2D, pie2D]
 
 
 def get_similar_diet(id: int) -> str:

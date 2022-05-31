@@ -1,3 +1,4 @@
+{% load static %}
 <div id="root">
     <form method="POST" enctype="multipart/form-data">
         {% csrf_token %} 
@@ -7,8 +8,8 @@
         <!-- Drop Box 부분 -->
             <div class="upload-box">
                 <div id="drop-file" class="drag-file">
-                <img src="https://img.icons8.com/pastel-glyph/2x/image-file.png" alt="파일 아이콘" class="image">
-                <p class="message">Drag files to upload</p>
+                <img id= 'previewImage'src="https://img.icons8.com/pastel-glyph/2x/image-file.png" alt="파일 아이콘" class="image">
+                <p id= 'message_text' class="message">Drag files to upload</p>
                 </div>
                 <label class="file-label" for="chooseFile">Choose File</label>
                 <input class="file" id="chooseFile" name="upload_diet" type="file" onchange="dropFile.handleFiles(this.files)" accept="image/png, image/jpeg, image/gif">

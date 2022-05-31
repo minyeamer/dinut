@@ -47,7 +47,7 @@
   border: 3px dashed red;
 }
 .contents .upload-box .drag-file .image {
-  width: 40px;
+  width: 200px;
 }
 .contents .upload-box .drag-file .message {
   margin-bottom: 0;

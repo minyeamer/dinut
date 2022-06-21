@@ -143,9 +143,16 @@
 🌐 Django에서 Nginx의 static 파일 경로를 인식하지 못하는 문제 발생
 > 🔧 `nginx.conf`의 static 폴더에 대한 alias를 `…/static`에서 `…/static/`으로 변경
 
-![Untitled](.images/Untitled%205.png)
-
-![Untitled](.images/Untitled%206.png)
+<table align="center" style="border:hidden!important;">
+<tr>
+  <td>
+    <img src=".images/Untitled%205.png" />
+  </td>
+  <td>
+    <img src=".images/Untitled%206.png" />
+  </td>
+</tr>
+</table>
 
 ---
 

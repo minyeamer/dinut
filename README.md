@@ -25,6 +25,8 @@
 </tr>
 </table>
 
+![vultr](.images/Vultr.png)
+
 ---
 
 ## Tasks

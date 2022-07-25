@@ -64,11 +64,9 @@
 - 팀원들의 개인사정과 의견을 반영하여 작업 별로 인원 할당
 
 > **원활한 역할 수행을 위해 정리한 Notion 테이블**
-
 ![notion](.images/notion.png)
 
 > **DB 구상도 (식단 관련 테이블은 영양정보 테이블을 상속)**
-
 ![db](.images/db.png)
 
 🤖 **Model Engineering**
@@ -78,7 +76,6 @@
 - InceptionV3 모델에 SGD, Adam과 같은 다양한 옵티마이저를 적용하여 학습 시도
 
 > **InceptionV3 옵티마이저 비교 (좌) | Adam을 적용시킨 후 정확도 측정 (우)**
-
 <table align="center" style="border:hidden!important;">
 <tr>
   <td>
@@ -98,15 +95,12 @@
 - AWS와 Vultr 인스턴스 상에서 배포 환경 구축 및 Docker를 활용한 서비스 배포
 
 > **메인 페이지 (하위 페이지에 대한 상세 이미지는 [하단](#6-demonstration) 참고)**
-
 ![home](.images/01_home.webp)
 
 > **Vultr 인스턴스 선택**
-
 ![vultr](.images/vultr.png)
 
 > **Docker Stack 배포**
-
 ![docker](.images/docker.png)
 
 ---
@@ -125,13 +119,11 @@
 `runserver` 이전에 실행되도록 의도한 파일에 로컬 환경에 대한 설정이 적용되는 문제 발생
 > 🔧 아래 이미지처럼 `--settings` 파라미터 값이 환경 변수에 적용되지 않는 것을 파악하고
 해당 파라미터를 직접 읽어서 환경 변수에 `DJANGO_SETTINGS_MODULE` 키값으로 추가
-
 ![error_environ](.images/error_environ.jpg)
 
 🌐 Docker 이미지 생성 중 `PyTorch`를 설치하는 과정에서 프로세스가 정지되는 문제 발생
 > 🔧 PyTorch와 의존성을 모두 설치하는데 Docker 컨테이너의 메모리가 부족해 발생한 것임을
 인지하고 `pip install` 명령어에 `-no-cache-dir` 옵션을 추가
-
 ![error_docker](.images/error_docker.png)
 
 🌐 AWS 인스턴스에서 서버를 실행하는 과정에서 YOLOv5 모델을 불러오다가 멈추는 문제 발생
@@ -165,15 +157,12 @@
 ## 6. Demonstration
 
 > 회원가입 및 로그인 페이지
-
 ![accountapp](.images/02_accountapp.webp)
 
 > 프로필 확인 및 수정 페이지
-
 ![profileapp](.images/03_profileapp.webp)
 
 > 식단 분석 페이지
-
 ![dietapp](.images/04_dietapp.webp)
 
 > 식단 관리 페이지

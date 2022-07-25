@@ -103,11 +103,11 @@
 
 > **Vultr 인스턴스 선택**
 
-![vultr.png](.images/vultr.png)
+![vultr](.images/vultr.png)
 
 > **Docker Stack 배포**
 
-![docker.png](.images/docker.png)
+![docker](.images/docker.png)
 
 ---
 
@@ -126,7 +126,7 @@
 > 🔧 아래 이미지처럼 `--settings` 파라미터 값이 환경 변수에 적용되지 않는 것을 파악하고
 해당 파라미터를 직접 읽어서 환경 변수에 `DJANGO_SETTINGS_MODULE` 키값으로 추가
 
-![error_environ.jpg](.images/error_environ.jpg)
+![error_environ](.images/error_environ.jpg)
 
 🌐 Docker 이미지 생성 중 `PyTorch`를 설치하는 과정에서 프로세스가 정지되는 문제 발생
 > 🔧 PyTorch와 의존성을 모두 설치하는데 Docker 컨테이너의 메모리가 부족해 발생한 것임을

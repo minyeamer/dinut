@@ -76,6 +76,7 @@
 - InceptionV3 모델에 SGD, Adam과 같은 다양한 옵티마이저를 적용하여 학습 시도
 
 > **InceptionV3 옵티마이저 비교 (좌) | Adam을 적용시킨 후 정확도 측정 (우)**
+
 <table align="center" style="border:hidden!important;">
 <tr>
   <td>
@@ -156,17 +157,17 @@
 
 ## 6. Demonstration
 
-> 회원가입 및 로그인 페이지
+> **회원가입 및 로그인 페이지**
 ![accountapp](.images/02_accountapp.webp)
 
-> 프로필 확인 및 수정 페이지
+> **프로필 확인 및 수정 페이지**
 ![profileapp](.images/03_profileapp.webp)
 
-> 식단 분석 페이지
+> **식단 분석 페이지**
 ![dietapp](.images/04_dietapp.webp)
 
-> 식단 관리 페이지
+> **식단 관리 페이지**
 ![dailyapp](.images/05_dailyapp.webp)
 
-> 관리자 페이지
+> **관리자 페이지**
 ![admin](.images/06_admin.webp)

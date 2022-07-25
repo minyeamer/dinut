@@ -1,35 +1,60 @@
 # Dinut
-  - [Summary](#summary)
-  - [Tasks](#tasks)
-  - [Issues](#issues)
-  - [Review](#review)
+1. [Introduction](#1-introduction)
+2. [Tech Stack](#2-tech-stack)
+3. [Tasks](#3-tasks)
+4. [Issues](#4-issues)
+5. [Post-Project](#5-post-project)
+6. [Demonstration](#6-demonstration)
 
 ---
 
-## Summary
+## 1. Introduction
+- 전통적인 식단 관리 서비스는 사용자가 직접 식품명과 영양소를 입력하는 방식이지만,
+이미지 소통이 주류가 되는 사회적 흐름에 맞춰 식단 관리도 이미지 기반으로 동작할 필요가 있음
+- 또한, 이미지 기반의 접근방식은 영양 지식에 문외한이지만 건강을 챙기고 싶은 소비자들에게도
+쉽고 간단하게 식단을 관리할 수 있는 경험을 제공할 것
+- 식단 이미지 상에서 음식을 검출하고 영양 분석 결과를 시각화하는 식단 분석 기능과
+캘린더에 일일 식단 이미지를 기록하는 식단 관리 기능을 구현해 서비스에 적용
+- 음식 검출을 위해 YOLOv5 모델을, 음식 분류를 위해 InceptionV3 모델을 활용
+- Vultr에서 제공하는 가상 인스턴스 상에서 Docker를 활용해 딥러닝 모델이 포함된 서비스를 배포
 
-- 식단 이미지를 통한 영양 분석 및 관리 서비스
-- 수기식 식단 관리에 어려움을 겪는 사람들을 서비스 대상으로 지정
-- 식단 이미지에서 음식을 검출 및 분류하고, 예측 결과를 기반으로 UI에 영양 성분 시각화
-- Vultr 인스턴스 상에서 Docker Stack을 활용해 딥러닝 모델이 포함된 서버를 배포
+<br>
 
-
-<table align="center" style="border:hidden!important;">
-<tr>
-  <td>
-    <img src=".images/c67bc032c912d45b1.jpg" />
-  </td>
-  <td>
-    <img width="1200rem" src=".images/c67bc032c912d45b2.jpg" />
-  </td>
-</tr>
-</table>
-
-![vultr](.images/Vultr.png)
+![overview](.images/04_dietapp.webp)
 
 ---
 
-## Tasks
+## 2. Tech Stack
+
+### Languages:
+- Python 3.8.9
+
+### IDE:
+- Visual Studio Code
+- Jupyter Notebook
+- Google Colab
+
+### Frameworks & Libraries:
+- Django 3.2
+- PyTorch 1.11.0
+- TensorFlow 2.8.0
+- OpenCV 4.5.5
+- FusionCharts 3.18.0
+
+### Server & DB:
+- Ubuntu Server 22.04 LTS (Vultr)
+- Docker 20.10.16 (latest)
+- Nginx 1.19.5
+- MariabDB 10.5
+- Portainer CE 2.11.1
+
+<br>
+
+![architecture](.images/architecture.png)
+
+---
+
+## 3. Tasks
 
 🔑 **Project Management**
 
@@ -39,14 +64,12 @@
 - 팀원들의 개인사정과 의견을 반영하여 작업 별로 인원 할당
 
 > **원활한 역할 수행을 위해 정리한 Notion 테이블**
-> 
 
-![Untitled](.images/Untitled.png)
+![notion](.images/notion.png)
 
 > **DB 구상도 (식단 관련 테이블은 영양정보 테이블을 상속)**
-> 
 
-![Untitled](.images/Untitled%201.png)
+![db](.images/db.png)
 
 🤖 **Model Engineering**
 
@@ -55,7 +78,6 @@
 - InceptionV3 모델에 SGD, Adam과 같은 다양한 옵티마이저를 적용하여 학습 시도
 
 > **InceptionV3 옵티마이저 비교 (좌) | Adam을 적용시킨 후 정확도 측정 (우)**
-> 
 
 <table align="center" style="border:hidden!important;">
 <tr>
@@ -75,47 +97,21 @@
 - 데이터프레임 정렬을 응용한 유사 식단 추천 기능을 구현하고, 상위 목록을 웹 상에서 테이블로 표시
 - AWS와 Vultr 인스턴스 상에서 배포 환경 구축 및 Docker를 활용한 서비스 배포
 
-> **(초기) 회원가입 페이지 (좌) | 프로필 페이지 (우)**
-> 
+> **메인 페이지 (하위 페이지에 대한 상세 이미지는 [하단](#6-demonstration) 참고)**
 
-<table align="center" style="border:hidden!important;">
-<tr>
-  <td>
-    <img src=".images/Untitled%202.png" />
-  </td>
-  <td>
-    <img src=".images/Untitled%203.png" />
-  </td>
-</tr>
-</table>
-
-> **탄단지 비율에 대한 원형 차트 (좌) | 유사 식단 추천 결과 (우)**
-> 
-
-<table align="center" style="border:hidden!important;">
-<tr>
-  <td>
-    <img width="800rem" src=".images/Picture13.jpg" />
-  </td>
-  <td>
-    <img src=".images/Picture2.png" />
-  </td>
-</tr>
-</table>
+![home](.images/01_home.webp)
 
 > **Vultr 인스턴스 선택**
-> 
 
-![1.png](.images/1.png)
+![vultr.png](.images/vultr.png)
 
 > **Docker Stack 배포**
-> 
 
-![2.png](.images/2.png)
+![docker.png](.images/docker.png)
 
 ---
 
-## Issues
+## 4. Issues
 
 🤖 InceptionV3 학습 중 truncated image에 대한 에러로 인해 학습 도중 중지되는 문제 발생
 > 🔧 `Pillow` 라이브러리로 이미지를 변환하는 과정에서 `LOAD_TRUNCATED_IMAGES` 에러가
@@ -130,13 +126,13 @@
 > 🔧 아래 이미지처럼 `--settings` 파라미터 값이 환경 변수에 적용되지 않는 것을 파악하고
 해당 파라미터를 직접 읽어서 환경 변수에 `DJANGO_SETTINGS_MODULE` 키값으로 추가
 
-![Untitled.jpg](.images/Untitled.jpg)
+![error_environ.jpg](.images/error_environ.jpg)
 
 🌐 Docker 이미지 생성 중 `PyTorch`를 설치하는 과정에서 프로세스가 정지되는 문제 발생
 > 🔧 PyTorch와 의존성을 모두 설치하는데 Docker 컨테이너의 메모리가 부족해 발생한 것임을
 인지하고 `pip install` 명령어에 `-no-cache-dir` 옵션을 추가
 
-![Untitled](.images/Untitled%204.png)
+![error_docker](.images/error_docker.png)
 
 🌐 AWS 인스턴스에서 서버를 실행하는 과정에서 YOLOv5 모델을 불러오다가 멈추는 문제 발생
 > 🔧 AWS 프리티어 인스턴스의 성능 한계(1GB RAM) 때문에 발생한 문제임을 깨닫고
@@ -145,20 +141,9 @@
 🌐 Django에서 Nginx의 static 파일 경로를 인식하지 못하는 문제 발생
 > 🔧 `nginx.conf`의 static 폴더에 대한 alias를 `…/static`에서 `…/static/`으로 변경
 
-<table align="center" style="border:hidden!important;">
-<tr>
-  <td>
-    <img src=".images/Untitled%205.png" />
-  </td>
-  <td>
-    <img src=".images/Untitled%206.png" />
-  </td>
-</tr>
-</table>
-
 ---
 
-## Review
+## 5. Post-Project
 
 - InceptionV3 모델을 Accuracy 기준으로 학습하는 과정에서 예측 결과가 특정 분류에 집중되었는데,   
 이후 F1-Score를 기준으로 재학습을 시도해보지 못하고 프로젝트가 마무리되어 아쉬움이 있음
@@ -174,3 +159,25 @@
 추가적으로 시간을 소비해버리면서 결과적으로 일부 기능을 포기해야 했던 문제가 있었다고 판단
 - 막바지에는 개인 작업에 집중하면서 프로젝트 관리에 소홀해지다 보니 충돌을 감수하면서까지   
 브랜치 간 Merge를 진행해야 했던 부분이 다수 존재하여 추가적인 에러가 발생하지 않을까 걱정했음
+
+---
+
+## 6. Demonstration
+
+> 회원가입 및 로그인 페이지
+
+![accountapp](.images/02_accountapp.webp)
+
+> 프로필 확인 및 수정 페이지
+
+![profileapp](.images/03_profileapp.webp)
+
+> 식단 분석 페이지
+
+![dietapp](.images/04_dietapp.webp)
+
+> 식단 관리 페이지
+![dailyapp](.images/05_dailyapp.webp)
+
+> 관리자 페이지
+![admin](.images/06_admin.webp)
